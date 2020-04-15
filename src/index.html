@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8" />
     <meta
             name="viewport"
@@ -32,7 +33,7 @@
         body {
             height: 100%;
             margin: 0;
-            background-color: #000000;
+            background-color: #ffffff;
         }
     </style>
 
@@ -47,7 +48,56 @@
       }
     </script> -->
 </head>
+<!---
 <body>
 <div id="phaser-game"></div>
 </body>
+-->
+
+
+<body>
+  <table id ="timetable">
+    <tr id="row1"></tr>
+    <tr id="row2"></tr>
+    
+  </table>
+
+  <form>
+      <label for="c1_speed">Comp 1 Speed</label><br>
+      <input type="text" id="c1_speed" name="c1_speed" value="1"><br>
+      <label for="c2_speed">Comp 2 Speed</label><br>
+      <input type="text" id="c2_speed" name="c2_speed" value="1"><br>
+  </form>
+
+
+  <script>
+      function genTimeTable(s1, s2) {
+        var time_1 = [10,100,100,1000]
+        var time_2 = [1,5,3,2]
+        var innerHTML_1 = ""
+        var innerHTML_2 = ""
+        for (let n= 0; n < time_1.length; n++) {
+          innerHTML_1 += "<td>"+time_1[n]*s1+"</td>"
+          innerHTML_2 += "<td>"+time_2[n]*s2+"</td>"
+        }
+        
+        $("#row1").html(innerHTML_1)
+        $("#row2").html(innerHTML_2)
+      }
+
+      function changeTimeTable(){
+        c1_speed = parseInt($("#c1_speed").val())
+        c2_speed = parseInt($("#c2_speed").val())
+        genTimeTable(c1_speed,c2_speed)
+      }
+
+      genTimeTable(1,1)
+      
+    </script>
+
+<button onclick="changeTimeTable()">Click</button>
+
+
+</body>
+
 </html>

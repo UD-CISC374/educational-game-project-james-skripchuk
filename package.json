@@ -5,7 +5,7 @@
   "homepage": "https://github.com/acbart/educational-phaser-game-template#readme",
   "main": "index.js",
   "game": {
-    "url": "educational-phaser-game-template",
+    "url": "https://github.com/UD-CISC374/educational-game-project-james-skripchuk",
     "shortName": "EdGame",
     "name": "Educational Phaser Game Template"
   },
