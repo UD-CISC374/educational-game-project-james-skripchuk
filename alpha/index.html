@@ -138,6 +138,7 @@
         pick and \(n_0\) first, and then calculate the C based on that.
     </p>
     <p>For example, find the <bold>minimum value</bold> of \(C\)  such that for all \(n \gt 1\); \(2x^2+4x \leq Cx^2\)</p>
+    <p>Look at the graph below to see the relationship between f(x) and Cg(x), and see how it changes when you change C</p>
     <p>\(C\):</p>
     <input type="text" id="answer_1" placeholder="Enter a number here"><br>
     <button onclick="checkAnswer1()">Check</button>
@@ -162,17 +163,21 @@
             const yValues_2 = xValues.map(function (x) {
               return scale2*x*x
             })
-            const trace1 = {
+            var trace1 = {
               x: xValues,
               y: yValues,
+              name: 'f(x)',
               type: 'scatter'
             }
-            const trace2 = {
+            var trace2 = {
               x: xValues,
               y: yValues_2,
+              name: 'Cg(x)',
               type: 'scatter',
               fill: 'tonexty'
             }
+            
+
             var trace3 = {
             x: [1],
             y: [f_x.evaluate({x:1})],
@@ -183,12 +188,11 @@
             }
             };
 
-
-
             const data = [trace1,trace2,trace3]
 
             var layout = {
-            title: "Graphing", 
+            title: "f(x) vs Cg(x)",
+            xref: 'paper', 
             xaxis: {
                 range: [0,2]
             },
