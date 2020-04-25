@@ -40,7 +40,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphagen.vendors.0805bb80903235d40eaf.bundle.js"
   },
   {
-    "revision": "2f9d4fb686fb3d2815a77037e8651eec",
+    "revision": "dcec56499f9761a44925cc8ec4243ca6",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphaindex.html"
   },
   {
