@@ -1,0 +1,52 @@
+body{
+    background-color: whitesmoke;
+    font-family: 'Roboto';
+}
+html { 
+    font-size: 24px
+    
+}
+
+#main{
+    margin-right: 15%;
+    margin-left: 15%;
+}
+
+p{
+    font-size: 1em;
+}
+
+hr{
+    color:black;
+}
+
+table{
+    border-collapse: collapse;
+    margin: auto;
+}
+
+table, th, td{
+    border: 3px solid black;
+}
+
+#morerows{
+    margin:auto;
+    padding: 10px;
+}
+
+th,td{
+    padding: 10px;
+}
+
+.center {
+    margin: auto;
+  }
+
+h1{
+}
+
+h3{
+}
+
+h2{
+}

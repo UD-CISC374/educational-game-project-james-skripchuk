@@ -24,6 +24,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphaassets/icons/icons8-game-controller-16.png"
   },
   {
+    "revision": "73c6324f2ca3ae7fb49af88d9d9d7a5a",
+    "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphaassets/styles.css"
+  },
+  {
     "revision": "53cefca2a0f75654486b180949686165",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphafavicon.ico"
   },
@@ -36,7 +40,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphagen.vendors.0805bb80903235d40eaf.bundle.js"
   },
   {
-    "revision": "c385912691afdfb0d4eb9822f79fc813",
+    "revision": "2f9d4fb686fb3d2815a77037e8651eec",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alphaindex.html"
   },
   {

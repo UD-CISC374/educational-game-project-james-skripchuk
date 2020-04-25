@@ -1,261 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js"></script>
+   <head>
+      <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="assets/styles.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js"></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async
+         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="https://unpkg.com/mathjs@6.6.4/dist/math.min.js"></script>
+      <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+      <meta charset="UTF-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+         />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta name="theme-color" content="#FF0000" />
+      <link rel="manifest" href="./manifest.json" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="application-name" content="Educational Phaser Game Template" />
+      <meta name="apple-mobile-web-app-title" content="Educational Phaser Game Template" />
+      <meta name="msapplication-starturl" content="./" />
+      <link rel="icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+      <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+      <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+      <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+      <title>Educational Phaser Game Template</title>
+      <noscript>Please enable javascript to continue using this application.</noscript>
+      <!-- installs the serviceWorker -->
+      <!-- <script>
+         if ('serviceWorker' in navigator) {
+           window.addEventListener('load', () => {
+             navigator.serviceWorker.register('./sw.js')
+           })
+         }
+         </script> -->
+   </head>
+   <!---
+      <body>
+      <div id="phaser-game"></div>
+      <script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alpha/gen.vendors.0805bb80903235d40eaf.bundle.js"></script><script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alpha/gen.main.426ec7cf92d30b8f424c.bundle.js"></script></body>
+      -->
+   <body>
+      <div id="main">
+         <h1 style>Asymptotic Explorer</h1>
+         <p>James Skripchuk</p>
+         <hr>
+         <h2>Introduction</h2>
+         <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec magna quis odio lobortis venenatis ultrices vitae nibh. Sed luctus sit amet sapien eu iaculis. Nullam at varius eros, a ultrices nunc. Sed sed convallis metus. Phasellus ut ligula interdum, consequat lacus vel, pharetra justo. Donec convallis sapien est, at vestibulum nunc ultricies in. Aliquam eget arcu porta, hendrerit arcu ut, congue dui. Etiam eget nibh quam. Etiam sodales justo sit amet tempor finibus. Nullam eget pretium velit. Curabitur venenatis eleifend fringilla. Sed fermentum justo et dui tincidunt consectetur.
+         </p>
 
-<script type="text/javascript" charset="UTF-8"
- src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.00.0/jsxgraphcore.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.00.0/jsxgraph.css" />  
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
+         <hr>
+         <h2>Computer Clock Speed Changer</h2>
+         <p>
+           So why can't we just time our algorithms?
+         </p>
+         <p>
+           We've recorded the time it takes for two computers to run two different algorithms to solve the same problem for different input sizes.
+           Our local supercomputer is running Algorithm A, and our lousy laptop is running Algorithm B.
+         </p>
+         <p>
+           Which algorithm do you think is faster? Why?
+         </p>
+         
+         <div id="cs-speed">
+            <table id ="timetable">
+              <tr id="row0">
+                <td>Size of Input</td>
+              </tr>
+               <tr id="row1">
+                 <td>Supercomputer Time (A)</td>
+               </tr>
+               <tr id="row2">
+                 <td>Lousy Laptop Time (B)</td>
+               </tr>
+            </table>
+         </div>
 
-<script src="https://unpkg.com/mathjs@6.6.4/dist/math.min.js"></script>
+         <p>
+            Now, click the button below to test the algorithms on larger and larger inputs.
+          </p>
+         <script>
+           var time_1 = [1,2,3,4,5,6,7,8,9,10,100,1000]
+           var s1 = 3
+           var s2 = 21
+           var current_index = 5
 
-<script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
-<meta charset="UTF-8" />
+            function addMoreRows(){
+              if(current_index < time_1.length){
+                var innerHTML_0 = $("#row0").html()
+                var innerHTML_1 = $("#row1").html()
+                var innerHTML_2 = $("#row2").html()
 
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-    <meta name="theme-color" content="#000000" />
-
-    <link rel="manifest" href="./manifest.json" />
-
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="Educational Phaser Game Template" />
-    <meta name="apple-mobile-web-app-title" content="Educational Phaser Game Template" />
-    <meta name="msapplication-starturl" content="./" />
-
-    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
-    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
-
-    <link rel="icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
-    <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
-
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-
-    <title>Educational Phaser Game Template</title>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            background-color: #ffffff;
-        }
-    </style>
-
-    <noscript>Please enable javascript to continue using this application.</noscript>
-
-    <!-- installs the serviceWorker -->
-    <!-- <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-        })
-      }
-    </script> -->
-</head>
-<!---
-<body>
-<div id="phaser-game"></div>
-<script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alpha/gen.vendors.0805bb80903235d40eaf.bundle.js"></script><script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/alpha/gen.main.426ec7cf92d30b8f424c.bundle.js"></script></body>
--->
-
-
-<body>
-    <h1>Welcome to Asymptotic Explorer</h1>
-    <h2>Where the game isn't fun and the points don't matter</h2>
-    <h3>This is very rough and very garbage</h3>
-    <h4>Don't kill me Dr. Bart</h4>
-    <hr>
-    <h2>Computer Clock Speed Changer</h2>
-    <p>
-        End Goal: A little explanation that even if you crank up the clock speed of a computer,
-        a crummy algorithm will still take longer on a supercomputer than a desktop.
-    </p>
-  <table id ="timetable">
-    <tr id="row1"></tr>
-    <tr id="row2"></tr>
-    
-  </table>
-
-  <form>
-      <label for="c1_speed">Comp 1 Speed</label><br>
-      <input type="text" id="c1_speed" name="c1_speed" value="1"><br>
-      <label for="c2_speed">Comp 2 Speed</label><br>
-      <input type="text" id="c2_speed" name="c2_speed" value="1"><br>
-  </form>
-
-
-  <script>
-      function genTimeTable(s1, s2) {
-        var time_1 = [10,100,100,1000]
-        var time_2 = [1,5,3,2]
-        var innerHTML_1 = ""
-        var innerHTML_2 = ""
-        for (let n= 0; n < time_1.length; n++) {
-          innerHTML_1 += "<td>"+time_1[n]*s1+"</td>"
-          innerHTML_2 += "<td>"+time_2[n]*s2+"</td>"
-        }
-        
-        $("#row1").html(innerHTML_1)
-        $("#row2").html(innerHTML_2)
-      }
-
-      function changeTimeTable(){
-        c1_speed = parseInt($("#c1_speed").val())
-        c2_speed = parseInt($("#c2_speed").val())
-        genTimeTable(c1_speed,c2_speed)
-      }
-
-      genTimeTable(1,1)
-      
-    </script>
-
-<button onclick="changeTimeTable()">Click</button>
-
-<hr>
-<h2>Graph View + Math Notation</h2>
-<ul>
-    <li>Using PlotlyJS for the graphing library</li>
-    <li>Using MathJax for te math notation</li>
-</ul>
-
-    <hr>
-
-    <h2>Example question</h2>
-
-    <p>Find an \(n_0\) and \(C\) such that for all \(n \gt n_0\) ;   \(2x^2+4x \leq Cx^2\)</p>
-
-    <p>You can find both \(n_0\) and \(C\) at the same time, but a better strategy is to 
-        pick and \(n_0\) first, and then calculate the C based on that.
-    </p>
-    <p>Look at the graph below to see the relationship between f(x) and Cg(x), and see how it changes when you change C</p>
-    <p>Then, answer the following question below.</p>
-    <p>For example, find the <bold>minimum value</bold> of \(C\)  such that for all \(n \gt 1\); \(2x^2+4x \leq Cx^2\)</p>
-    <p>\(C\):</p>
-    <input type="text" id="answer_1" placeholder="Enter a number here"><br>
-    <button onclick="checkAnswer1()">Check</button>
-    <p id="result_1"></p>
-    <div id="plot"></div>
-
-    <script>
-        
-
-        function draw(scale2) {
-            f_x = math.compile("2x^2+4x")
-
-          try {
-            // compile the expression once
-      
-            // evaluate the expression repeatedly for different values of x
-            const xValues = math.range(0, 10, 0.01).toArray()
-            const yValues = xValues.map(function (x) {
-              return f_x.evaluate({x:x})
-            })
-            
-            const yValues_2 = xValues.map(function (x) {
-              return scale2*x*x
-            })
-            var trace1 = {
-              x: xValues,
-              y: yValues,
-              name: 'f(x)',
-              type: 'scatter'
+                innerHTML_0 += "<td>"+time_1[current_index]+"</td>"
+                innerHTML_1 += "<td>"+time_1[current_index]*time_1[current_index]*s1+"</td>"
+                innerHTML_2 += "<td>"+time_1[current_index]*s2+"</td>"
+                current_index++;
+                
+                $("#row0").html(innerHTML_0)
+                $("#row1").html(innerHTML_1)
+                $("#row2").html(innerHTML_2)
+              }
             }
-            var trace2 = {
-              x: xValues,
-              y: yValues_2,
-              name: 'Cg(x)',
-              type: 'scatter',
-              fill: 'tonexty'
+
+            function genTimeTable(s1, s2) {
+              
+
+              
+
+
+              var innerHTML_0 = $("#row0").html()
+              var innerHTML_1 = $("#row1").html()
+              var innerHTML_2 = $("#row2").html()
+              for (let n= 1; n < current_index; n++) {
+                innerHTML_0 +="<td>"+time_1[n]+"</td>"
+                innerHTML_1 += "<td>"+n*n*s1+"</td>"
+                innerHTML_2 += "<td>"+n*s2+"</td>"
+              }
+              
+              $("#row0").html(innerHTML_0)
+              $("#row1").html(innerHTML_1)
+              $("#row2").html(innerHTML_2)
             }
             
-
-            var trace3 = {
-            x: [1],
-            y: [f_x.evaluate({x:1})],
-            mode: 'markers',
-            type: 'scatter',
-            marker: {
-                size: 10
+            function changeTimeTable(){
+              c1_speed = parseInt($("#c1_speed").val())
+              c2_speed = parseInt($("#c2_speed").val())
+              genTimeTable(c1_speed,c2_speed)
             }
-            };
+            
+            genTimeTable(s1,s2)
+            
+         </script>
 
-            const data = [trace1,trace2,trace3]
-
-            var layout = {
-            title: "f(x) vs Cg(x)",
-            xref: 'paper', 
-            xaxis: {
-                range: [0,2]
-            },
-            yaxis:{
-                range:[0,20]
+         <div class="center">
+         <button id="morerows" onclick="addMoreRows()">Bigger Input Size!</button>
+         <p>
+           [Explain what this means]
+         </p>
+        </div>
+         <hr>
+         <h2>Big O Notation</h2>
+         <p>Find an \(n_0\) and \(C\) such that for all \(n \gt n_0\) ;   \(2x^2+4x \leq Cx^2\)</p>
+         <p>You can find both \(n_0\) and \(C\) at the same time, but a better strategy is to 
+            pick and \(n_0\) first, and then calculate the C based on that.
+         </p>
+         <p>Look at the graph below to see the relationship between f(x) and Cg(x), and see how it changes when you change C</p>
+         <p>Then, answer the following question below.</p>
+         <p>
+            For example, find the 
+            <bold>minimum value</bold>
+            of \(C\)  such that for all \(n \gt 1\); \(2x^2+4x \leq Cx^2\)
+         </p>
+         <p>\(C\):</p>
+         <input type="text" id="answer_1" placeholder="Enter a number here"><br>
+         <button onclick="checkAnswer1()">Check</button>
+         <p id="result_1"></p>
+         <div id="plot"></div>
+         <script>
+           var times_attempted = 0
+            function draw(scale2) {
+                f_x = math.compile("2x^2+4x")
+            
+              try {
+                // compile the expression once
+            
+                // evaluate the expression repeatedly for different values of x
+                const xValues = math.range(0, 10, 0.01).toArray()
+                const yValues = xValues.map(function (x) {
+                  return f_x.evaluate({x:x})
+                })
+                
+                const yValues_2 = xValues.map(function (x) {
+                  return scale2*x*x
+                })
+                var trace1 = {
+                  x: xValues,
+                  y: yValues,
+                  name: 'f(x)',
+                  type: 'scatter'
+                }
+                var trace2 = {
+                  x: xValues,
+                  y: yValues_2,
+                  name: 'Cg(x)',
+                  type: 'scatter',
+                  fill: 'tonexty'
+                }
+                
+            
+                var trace3 = {
+                x: [1],
+                y: [f_x.evaluate({x:1})],
+                mode: 'markers',
+                type: 'scatter',
+                marker: {
+                    size: 10
+                }
+                };
+            
+                const data = [trace1,trace2,trace3]
+            
+                var layout = {
+                title: "f(x) vs Cg(x)",
+                xref: 'paper', 
+                xaxis: {
+                    range: [0,2]
+                },
+                yaxis:{
+                    range:[0,20]
+                }
+                };
+            
+                Plotly.newPlot('plot', data,layout,{displayModeBar: false})
+              }
+              catch (err) {
+                console.error(err)
+                alert(err)
+              }
             }
-            };
+            
+            function checkAnswer1(){
+                var val = parseFloat($("#answer_1").val())
+                var result_text = "Incorrect, try again!"
+                if(val == 6){
+                    result_text = "Good Job!"
+                }else if(val >= 6){
+                    result_text = "While this does satisfy the expression, it's not the minimum. Try Again!"
+                }
 
-            Plotly.newPlot('plot', data,layout)
-          }
-          catch (err) {
-            console.error(err)
-            alert(err)
-          }
-        }
-
-        function checkAnswer1(){
-            var val = parseFloat($("#answer_1").val())
-            var result_text = "Incorrect, try again!"
-            if(val == 6){
-                result_text = "Good Job!"
-            }else if(val >= 6){
-                result_text = "While this does satisfy the expression, it's not the minimum. Try Again!"
+                if(times_attempted >= 3){
+                  result_text = "The answer is 6"
+                }
+                draw(val)
+                times_attempted+=1
+            
+                $("#result_1").text(result_text)
             }
-            draw(val)
-
-            $("#result_1").text(result_text)
-        }
-
-        draw(1)
-    </script>
-
-    
-
-    
+            
+            draw(1)
+         </script>
 
 
-    
-        
+         <h2>
+           Big Omega
+         </h2>
 
-        <!--
+         <p>
+            Praesent vel felis ac nibh ultricies egestas quis ullamcorper arcu. Maecenas volutpat ullamcorper quam sed efficitur. Aliquam eleifend erat eget dui consectetur porta. Nam at justo et libero lobortis tempor eu eget nulla. Proin sit amet sem faucibus, consequat eros id, feugiat dolor. Aliquam erat volutpat. Quisque vehicula egestas urna, ac varius arcu rutrum ut.
+         </p>
+         <hr>
+
+         <h2>
+           Big Theta
+         </h2>
+         <p>
+            I'd just like to interject for a moment. What you're referring to as Linux, is in fact, GNU/Linux, or as I've recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX.
+         </p>
+         <hr>
+
+         <h2>
+            When <em>not</em> to use Big O
+          </h2>
+          <p>
+              Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called "Linux", and many of its users are not aware that it is basically the GNU system, developed by the GNU Project.
+          </p>
+          <hr>
+
+          <h2>
+              Conclusion
+            </h2>
+            <p>
+                There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine's resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called "Linux" distributions are really distributions of GNU/Linux.
+            </p>
+         <!--
             <div class="slidecontainer">
             <p>Default range slider:</p>
             <input type="range" min="1" max="100" value="50" id="myslider">
             <p>Default range slider:</p>
                 <input type="range" min="1" max="100" value="50" id="myslider2">
-        </div>
+            </div>
                 
-        <p id ="sliderval"></p>
-      <div id="plot"></div>
-      
-      
-    
-        <script>
+            <p id ="sliderval"></p>
+            <div id="plot"></div>
+            
+            
+            
+            <script>
             var f_x = "3*x^2+10*x"
             f_x = math.compile(f_x)
-
-
-        function draw(scale1,scale2) {
-          try {
+            
+            
+            function draw(scale1,scale2) {
+            try {
             // compile the expression once
-      
+            
             // evaluate the expression repeatedly for different values of x
             const xValues = math.range(0, 10, 0.01).toArray()
             const yValues = xValues.map(function (x) {
@@ -276,7 +319,7 @@
               type: 'scatter'
             }
             const data = [trace1,trace2]
-
+            
             var layout = {
             title: "Reversed Axis with Min/Max", 
             xaxis: {
@@ -286,37 +329,31 @@
                 range:[0,10]
             }
             };
-
+            
             Plotly.newPlot('plot', data,layout)
-          }
-          catch (err) {
+            }
+            catch (err) {
             console.error(err)
             alert(err)
-          }
-        }
-      
-        //document.getElementById('form').onsubmit = function (event) {
-        //  event.preventDefault()
-        //  draw()
-        //}
-
-        $("#myslider2").on("input", function(){
-      //console.log(myChart.data.datasets.data)
+            }
+            }
+            
+            //document.getElementById('form').onsubmit = function (event) {
+            //  event.preventDefault()
+            //  draw()
+            //}
+            
+            $("#myslider2").on("input", function(){
+            //console.log(myChart.data.datasets.data)
             var slider_val = parseInt($("#myslider").val())
             var slider2_val = parseInt($("#myslider2").val())
             draw(slider_val,slider2_val)
-        })
-      
-        draw(1,2)
-      </script>
-    -->
-
-    <hr>
-
-    
-
-
-
-</body>
-
+            })
+            
+            draw(1,2)
+            </script>
+            -->
+         <hr>
+      </div>
+   </body>
 </html>
