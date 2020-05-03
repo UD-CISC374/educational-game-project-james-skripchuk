@@ -7,9 +7,14 @@ html {
     
 }
 
+.def{
+    background-color: #dba7e6;
+    padding: 20px;
+}
+
 #main{
-    margin-right: 15%;
-    margin-left: 15%;
+    margin-right: 20%;
+    margin-left: 20%;
 }
 
 p{
@@ -40,7 +45,11 @@ th,td{
 
 .center {
     margin: auto;
-  }
+}
+
+.center-text{
+    text-align: center;
+}
 
 h1{
 }
