@@ -159,27 +159,34 @@
          <table>
             <tr>
                <td>
-                  <p>\(f(n) = 2n^2+4n\)</p>
+                  <p>\(f(n) = n^3+2n^2+4\)</p>
                </td>
                <td>
-                  <p>\(c = 6\)</p>
+                  <p>\(c = 4\)</p>
                </td>
             </tr>
             <tr>
                <td>
-                  <p>\(g(n) = n^2\)</p>
+                  <p>\(g(n) = n^3\)</p>
                </td>
                <td>
-                  <p>\(n_0 = 1\)</p>
+                  <p>\(n_0 = 4\)</p>
                </td>
             </tr>
          </table>
-         <p class="center-text">\(2n^2+4n\) is  \(O(n^2)\), because \(2n^2+4n \leq 6n^2\) for all \(n \geq 1\)</p>
-         <div id="example1-plot"></div>
+         <div class="colored-example" style="background-color:#2ecc71; margin-top:20px">
+        <p class="center-text">\(n^3+2n^2+4\) is  \(O(n^3)\), because \(n^3+2n^2+4 \leq 4n^3\) for all \(n \geq 4\)</p>
+        </div>
+        <p>Look at the graph below to see a visual example of this relationship.</p>
+        <p>As you can see, for all \(n \geq 4\) (represented by the vertical dotted line), \(f(x) \leq cg(x)\)</p>
+          <div id="example1-plot"></div>
+         
          <script>
             function drawExample1(div_name, c,n=4,paint_color="green",
               f_x_str = "x^3+2x^2+4",
-              g_x_str = "x^3"
+              g_x_str = "x^3",
+              max_x = 5,
+              max_y = 256
             ){
               f_x = math.compile(f_x_str)
               g_x = math.compile(c+g_x_str)
@@ -225,10 +232,10 @@
               title: "f(x) & c*g(x)",
               xref: 'paper', 
               xaxis: {
-                  range: [0,5]
+                  range: [0,max_x]
               },
               yaxis:{
-                  range:[0,4*4*4*4]
+                  range:[0,max_y]
               },
               shapes: [{
                 type: 'line',
@@ -248,40 +255,34 @@
               Plotly.newPlot(div_name, data,layout,{displayModeBar: true})
             }
             
-            drawExample1("example1-plot",6);
+            drawExample1("example1-plot",4);
             
          </script>
          <p>Remember, \(n_0\) and \(c\) can be <strong>anything</strong>, as long as the statement \(f(n) \leq cg(n)\) for all \(n \geq n_0\) holds.</p>
-         <p><em>In the above example, the Big O condition also holds true for \(c=4\) and \(n_0=3\).</em></p>
-         <p>But, it is also nice to have a procedure to follow when proving something; so this is how I arrived at the values \(c=6\) and \(n_0=1\) for the above example</p>
-         <h3>Calculation Example</h3>
-         <p>The way you can prove a Big O expression is by <em>replacing lower order terms with higher ones and validating those decisions.</em></p>
-         <p>We replace these lower order terms, until we get into the form: \(f(x) \leq cg(x)\) for \(n \geq n_0\)</p>
-         <p>Here is how I did this procedure with the above example:</p>
-         <div class="def">
-         <p>\(f(x) = n^3+2n^2+4\)</p>
-         <p>\(g(x) = n^3\)</p>
+         <p>In the above example, you can see that the Big O condition also holds true for \(c=4\) and \(n_0=3\).</p>
+         <p>The same is true for \(c=4\) and \(n_0=2\)</p>
+         <p>But it is <strong>not</strong> true for \(c=4\) and \(n_0=1\)</p>
+         <p>Below you can test different values of \(c\) and \(n_0\) to see if they make the Big O statement true.</p>
+         
+         
+         <div id="sliders">
+            <div style="float:left">
+             <p id="slider-c">\(c=4\)</p>
+             <input type="range" id="example2-c" name="quantity" min="1" max="10" value="4" step=0.5>
+           </div>
+           <div style="float:left">
+             <p id = "slider-n">\(n_0=4\)
+             </p>
+             
+           <input type="range" id="example2-n" name="quantity" min="0" max="5" value="4" step="0.5">
+             </div>
+         </div>
 
-         <p>First we remove the \(2n^2\) term.</p>
-         <p>\(n^3+2n^2+4 \leq n^3+2n^3+4\) &nbsp;&nbsp;since \(n^2 \leq n^3\) for \(n \geq 1\) </p>
-         <p>Then we remove the \(4\) term.</p>
-         <p>\(n^3+2n^3+4 \leq n^3+2n^3+n^3\) &nbsp;&nbsp;since \(4 \leq n^3\) for \(n \geq 4\)</p>
-
-         <p>\(n^3+2n^3+n^3 = 4n^3\)</p>
-         <p>Therefore, using the above two expressions, we can safely say:</p>
-         <p>\(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\)</p>
-         <p>Now doesn't this look familiar? This is the definition of Big O where  \(c=4\) and \(n_0=4\)</p>
-
-         <p>Therefore, using all the above information:</p>
-         <p class="center-text">\(n^3+2n^2+4\) is \(O(n^3)\), since \(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\) </p>
-        </div>
-
-         <input type="range" id="example2-c" name="quantity" min="1" max="10" value="4" step=0.5>
-         <input type="range" id="example2-n" name="quantity" min="0" max="5" value="4" step="0.5">
          <div class = "colored-example" id="colored-example1">
             <p class="center-text" id="example2-text">\(n^3+2n^2+4\) is \(O(n^3)\), because \(n^3+2n^2+4\leq 4n^3\) for all \(n \geq 4\)</p>
             <p id="example2-correct" class="center-text">Valid \(c\) and \(n_0\)</p>
          </div>
+         
          <div id="example2-plot"></div>
          <script>
             green_color = "#2ecc71"
@@ -293,7 +294,11 @@
               var txt = '\\(n^3+2n^2+4\\) is  \\(O(n^3)\\), because \\(n^3+2n^2+4 \\leq '+c+'n^3\\) for all \\(n \\geq '+n+'\\)'
               
               $("#example2-text").text(txt);
-              MathJax.typeset(["#example2-text"])
+              $("#slider-c").text('\\(c='+c+"\\)");
+              $("#slider-n").text('\\(n='+n+"\\)");
+              MathJax.typeset(["#example2-text","#slider-c","#slider-n"])
+
+              
             
               
               paint_color=red_color
@@ -322,10 +327,36 @@
             
             drawExample1("example2-plot",4);
          </script>
+
+         <p>You may be wondering how we calculated this pair of \(c\) and \(n_0\). Below I've detailed a consistent procedure for how you can derive \(c\) and \(n_0\)</p>
+         <hr>
+         <h3>Calculation Example</h3>
+         <p>The way you can prove a Big O expression is by <em>replacing lower order terms with higher ones and validating those decisions.</em></p>
+         <p>We replace these lower order terms, until we get into the form: \(f(x) \leq cg(x)\) for \(n \geq n_0\)</p>
+         <p>Here is how I did this procedure with the above example:</p>
+         <div class="def">
+         <p>\(f(n) = n^3+2n^2+4\)</p>
+         <p>\(g(n) = n^3\)</p>
+
+         <p>First we remove the \(2n^2\) term.</p>
+         <p>\(n^3+2n^2+4 \leq n^3+2n^3+4\) &nbsp;&nbsp;since \(n^2 \leq n^3\) for \(n \geq 1\) </p>
+         <p>Then we remove the \(4\) term.</p>
+         <p>\(n^3+2n^3+4 \leq n^3+2n^3+n^3\) &nbsp;&nbsp;since \(4 \leq n^3\) for \(n \geq 4\)</p>
+
+         <p>\(n^3+2n^3+n^3 = 4n^3\)</p>
+         <p>Therefore, using the above two expressions, we can safely say:</p>
+         <p>\(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\)</p>
+         <p>Now doesn't this look familiar? This is the definition of Big O where  \(c=4\) and \(n_0=4\)</p>
+
+         <p>Therefore, using all the above information:</p>
+         <p class="center-text">\(n^3+2n^2+4\) is \(O(n^3)\), since \(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\) </p>
+        </div>
+
+         
          <h3>Your Turn</h3>
-         <p class="center-text">Prove that \(n^3+2n^2+4\) is  \(O(n^3)\) by finding a suitable \(n_0\) and \(c\)</p>
+         <p class="center-text">Prove that \(n^2+2n\) is  \(O(n^2)\) by finding a suitable \(n_0\) and \(c\)</p>
          <div class="colored-example" id="colored-example2">
-            <p class="center-text">\(n^3+2n^2+4\) is  \(O(n^3)\), because \(n^3+2n^2+4 \leq cn^3\) for all \(n \geq n_0\)</p>
+            <p class="center-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
             <p class="center-text">Choose a \(c\) and \(n_0\)</p>
          </div>
          
@@ -339,7 +370,7 @@
          <script>
 
 
-            drawExample1("example3-plot",1,1,"green","x^3+2x^2+4","x^3");
+            drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
 
             $("#colored-example2").css("background-color",green_color)
          </script>
