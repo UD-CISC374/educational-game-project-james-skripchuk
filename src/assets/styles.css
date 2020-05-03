@@ -9,6 +9,7 @@ html {
 
 .def{
     background-color: #dba7e6;
+    border-radius: 10px;
     padding: 20px;
 }
 
@@ -32,6 +33,11 @@ table{
 
 table, th, td{
     border: 3px solid black;
+}
+
+.colored-example{
+    padding:10px;
+    border-radius: 10px;
 }
 
 #morerows{

@@ -185,9 +185,9 @@
           <div id="example1-plot"></div>
           <script>
           
-          function drawExample1(){
+          function drawExample1(div_name, c,n=2,paint_color="green"){
             f_x = math.compile("2x^2+4x")
-            g_x = math.compile("4x^2")
+            g_x = math.compile(c+"x^2")
 
             const xValues = math.range(0, 10, 0.01).toArray()
             
@@ -202,20 +202,20 @@
             var trace1 = {
                   x: xValues,
                   y: fyValues,
-                  name: 'f(x)',
+                  name: '2x^2+4x',
                   type: 'scatter'
                 }
             var trace2 = {
               x: xValues,
               y: gyValues,
-              name: 'cg(x)',
+              name: c+'x^2',
               type: 'scatter',
               fill: 'tonexty'
             }
 
             var trace3 = {
-                x: [2],
-                y: [f_x.evaluate({x:2})],
+                x: [n],
+                y: [f_x.evaluate({x:n})],
                 name: "Intersection",
                 mode: 'markers',
                 type: 'scatter',
@@ -224,239 +224,118 @@
                 }
                 };
 
-            const data = [trace1,trace2,trace3]
+            const data = [trace1,trace2]
             
             var layout = {
-            title: "f(x) & cg(x)",
+            title: "f(x) & c*g(x)",
             xref: 'paper', 
             xaxis: {
                 range: [0,4]
             },
             yaxis:{
                 range:[0,64]
-            }
+            },
+            shapes: [{
+              type: 'line',
+              x0: n,
+              y0: 0,
+              x1: n,
+              yref: 'paper',
+              y1: 1,
+              line: {
+                color: paint_color,
+                width: 1.5,
+                dash: 'dot'
+              }
+            }]
             };
         
-            Plotly.newPlot('example1-plot', data,layout,{displayModeBar: true})
+            Plotly.newPlot(div_name, data,layout,{displayModeBar: true})
           }
 
-          drawExample1();
+          drawExample1("example1-plot",4);
           
           </script>
 
           <p>As you can see, the functions intersect at \((2,16)\). </p>
-            <p>It is at this point, \(cg(x)\) overtakes \(f(x)\), fulfilling the conditions for \(f(x)\) to be \(O(g(x))\) </p>
+            <p>It is at this point, \(cg(n)\) overtakes \(f(n)\), fulfilling the conditions for \(f(x)\) to be \(O(g(x))\) </p>
+          <p>Remember, \(n_0\) and \(c\) can be <strong>anything</strong>, as long as the statement \(f(n) \leq cg(n)\) for all \(n \geq n_0\) holds.</p>
+          
+          <p><em>In the above example, the Big O condition also holds true for \(c=4\) and \(n_0=3\).</em></p>
 
-          <hr>
-         <p>Find an \(n_0\) and \(C\) such that for all \(n \gt n_0\) ;   \(2x^2+4x \leq Cx^2\)</p>
-         <p>You can find both \(n_0\) and \(C\) at the same time, but a better strategy is to 
-            pick and \(n_0\) first, and then calculate the C based on that.
-         </p>
-         <p>Look at the graph below to see the relationship between f(x) and Cg(x), and see how it changes when you change C</p>
-         <p>Then, answer the following question below.</p>
-         <p>
-            For example, find the 
-            <bold>minimum value</bold>
-            of \(C\)  such that for all \(n \gt 1\); \(2x^2+4x \leq Cx^2\)
-         </p>
-         <p>\(C\):</p>
-         <input type="text" id="answer_1" placeholder="Enter a number here"><br>
-         <button onclick="checkAnswer1()">Check</button>
-         <p id="result_1"></p>
-         <div id="plot"></div>
-         <script>
-           var times_attempted = 0
-            function draw(scale2) {
-                f_x = math.compile("2x^2+4x")
-            
-              try {
-                // compile the expression once
-            
-                // evaluate the expression repeatedly for different values of x
-                const xValues = math.range(0, 10, 0.01).toArray()
-                const yValues = xValues.map(function (x) {
-                  return f_x.evaluate({x:x})
-                })
-                
-                const yValues_2 = xValues.map(function (x) {
-                  return scale2*x*x
-                })
-                var trace1 = {
-                  x: xValues,
-                  y: yValues,
-                  name: 'f(x)',
-                  type: 'scatter'
-                }
-                var trace2 = {
-                  x: xValues,
-                  y: yValues_2,
-                  name: 'Cg(x)',
-                  type: 'scatter',
-                  fill: 'tonexty'
-                }
-                
-            
-                var trace3 = {
-                x: [1],
-                y: [f_x.evaluate({x:1})],
-                mode: 'markers',
-                type: 'scatter',
-                marker: {
-                    size: 10
-                }
-                };
-            
-                const data = [trace1,trace2,trace3]
-            
-                var layout = {
-                title: "f(x) vs Cg(x)",
-                xref: 'paper', 
-                xaxis: {
-                    range: [0,2]
-                },
-                yaxis:{
-                    range:[0,20]
-                }
-                };
-            
-                Plotly.newPlot('plot', data,layout,{displayModeBar: false})
+          <p>But, it is also nice to have a procedure to follow when proving something; so this is how I arrived at the values \(c=4\) and \(n_0=2\) for the above example</p>
+          <h3>Calculation Example</h3>
+          <p>Since we can prove Big O if it holds with <em>any</em> \(c\) and \(n_0\), we can pick any \(n_0\) we want, and solve for it's respective \(c\)</p>
+          <p>We choose \(n_0=2\)</p>
+          <p>Now, we can substitute our variables into the Big O condition: </p>
+          <p>\(f(n) \leq cg(n)\)</p>
+          <p>\(2n^2+4n \leq cn^2\)</p>
+          <p>\(2(2)^2+4(2) \leq c(2)^2\)</p>
+          <p>\(8+8 \leq 4c\)</p>
+          <p>\(16 \leq 4c\)</p>
+          <p>\(4 \leq c\)</p>
+          <p>I chose \(c=4\) since it is the smallest possible \(c\) that works, but notice that you can choose any \(c\) as long as it is greater than 4.</p>
+          
+          <input type="range" id="example2-c" name="quantity" min="1" max="10" value="4" step=0.5>
+          <input type="range" id="example2-n" name="quantity" min="0" max="4" value="2" step="0.5">
+
+          <div class = "colored-example" id="colored-example1">
+          <p class="center-text" id="example2-text">\(2n^2+4n\) is  \(O(n^2)\), because \(2n^2+4n \leq 4n^2\) for all \(n \geq 2\)</p>
+          <p id="example2-correct" class="center-text">Valid \(c\) and \(n_0\)</p>
+        </div>
+          <div id="example2-plot"></div>
+          <script>
+            green_color = "#2ecc71"
+            red_color = "#ff7675"
+            function updateExample2(){
+              var c = parseFloat($("#example2-c").val())
+              var n = parseFloat($("#example2-n").val())
+
+              var txt = '\\(2n^2+4n\\) is  \\(O(n^2)\\), because \\(2n^2+4n \\leq '+c+'n^2\\) for all \\(n \\geq '+n+'\\)'
+              
+              $("#example2-text").text(txt);
+              MathJax.typeset(["#example2-text"])
+
+              min_c = (2*n*n+4*n)/(n*n)
+              
+              paint_color=red_color
+              result_text = "Invalid \\(c\\) and \\(n_0\\)"
+              if(c>=min_c){
+                paint_color = green_color
+                result_text = "Valid \\(c\\) and \\(n_0\\)"
               }
-              catch (err) {
-                console.error(err)
-                alert(err)
-              }
-            }
-            
-            function checkAnswer1(){
-                var val = parseFloat($("#answer_1").val())
-                var result_text = "Incorrect, try again!"
-                if(val == 6){
-                    result_text = "Good Job!"
-                }else if(val >= 6){
-                    result_text = "While this does satisfy the expression, it's not the minimum. Try Again!"
-                }
 
-                if(times_attempted >= 3){
-                  result_text = "The answer is 6"
-                }
-                draw(val)
-                times_attempted+=1
-            
-                $("#result_1").text(result_text)
-            }
-            
-            draw(1)
-         </script>
+              $("#colored-example1").css("background-color",paint_color)
+              $("#example2-correct").text(result_text);
+              MathJax.typeset(["#example2-correct"])
 
+              drawExample1("example2-plot",c,n,paint_color);
+            }
+            
+            $("#example2-c").on("input",function() {
+              updateExample2()
+            });
+            
+            $("#example2-n").on("input",function() {
+              updateExample2()
+            });
 
-         <h2>
-           Big Omega
-         </h2>
+            $("#colored-example1").css("background-color",green_color)
 
-         <p>
-            Praesent vel felis ac nibh ultricies egestas quis ullamcorper arcu. Maecenas volutpat ullamcorper quam sed efficitur. Aliquam eleifend erat eget dui consectetur porta. Nam at justo et libero lobortis tempor eu eget nulla. Proin sit amet sem faucibus, consequat eros id, feugiat dolor. Aliquam erat volutpat. Quisque vehicula egestas urna, ac varius arcu rutrum ut.
-         </p>
-         <hr>
+            drawExample1("example2-plot",4);
+          </script>
 
-         <h2>
-           Big Theta
-         </h2>
-         <p>
-            I'd just like to interject for a moment. What you're referring to as Linux, is in fact, GNU/Linux, or as I've recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX.
-         </p>
-         <hr>
+      <h3>Your Turn</h3>
+      <p class="center-text">Prove that \(n^3+2n^2+4\) is  \(O(n^3)\) by finding a suitable \(n_0\) and \(c\)</p>
+      
+      <div class="colored-example" id="colored-example2">
+        <p class="center-text">\(n^3+2n^2+4\) is  \(O(n^3)\), because \(n^3+2n^2+4 \leq cn^3\) for all \(n \geq n_0\)</p>
+        <p class="center-text">Choose a \(c\) and \(n_0\)</p>  ` 
+        </div>
+    <script>
+       $("#colored-example2").css("background-color",green_color)
+    </script>
 
-         <h2>
-            When <em>not</em> to use Big O
-          </h2>
-          <p>
-              Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called "Linux", and many of its users are not aware that it is basically the GNU system, developed by the GNU Project.
-          </p>
-          <hr>
-
-          <h2>
-              Conclusion
-            </h2>
-            <p>
-                There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine's resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called "Linux" distributions are really distributions of GNU/Linux.
-            </p>
-         <!--
-            <div class="slidecontainer">
-            <p>Default range slider:</p>
-            <input type="range" min="1" max="100" value="50" id="myslider">
-            <p>Default range slider:</p>
-                <input type="range" min="1" max="100" value="50" id="myslider2">
-            </div>
-                
-            <p id ="sliderval"></p>
-            <div id="plot"></div>
-            
-            
-            
-            <script>
-            var f_x = "3*x^2+10*x"
-            f_x = math.compile(f_x)
-            
-            
-            function draw(scale1,scale2) {
-            try {
-            // compile the expression once
-            
-            // evaluate the expression repeatedly for different values of x
-            const xValues = math.range(0, 10, 0.01).toArray()
-            const yValues = xValues.map(function (x) {
-              return f_x.evaluate({x:x})
-            })
-            
-            const yValues_2 = xValues.map(function (x) {
-              return scale2*x*x
-            })
-            const trace1 = {
-              x: xValues,
-              y: yValues,
-              type: 'scatter'
-            }
-            const trace2 = {
-              x: xValues,
-              y: yValues_2,
-              type: 'scatter'
-            }
-            const data = [trace1,trace2]
-            
-            var layout = {
-            title: "Reversed Axis with Min/Max", 
-            xaxis: {
-                range: [0,1]
-            },
-            yaxis:{
-                range:[0,10]
-            }
-            };
-            
-            Plotly.newPlot('plot', data,layout)
-            }
-            catch (err) {
-            console.error(err)
-            alert(err)
-            }
-            }
-            
-            //document.getElementById('form').onsubmit = function (event) {
-            //  event.preventDefault()
-            //  draw()
-            //}
-            
-            $("#myslider2").on("input", function(){
-            //console.log(myChart.data.datasets.data)
-            var slider_val = parseInt($("#myslider").val())
-            var slider2_val = parseInt($("#myslider2").val())
-            draw(slider_val,slider2_val)
-            })
-            
-            draw(1,2)
-            </script>
-            -->
-         <hr>
       </div>
    </body>
 </html>
