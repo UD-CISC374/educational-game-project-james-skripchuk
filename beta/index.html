@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="assets/styles.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js"></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async
+         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="https://unpkg.com/mathjs@6.6.4/dist/math.min.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <meta charset="UTF-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+         />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta name="theme-color" content="#FF0000" />
+      <link rel="manifest" href="./manifest.json" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="application-name" content="Educational Phaser Game Template" />
+      <meta name="apple-mobile-web-app-title" content="Educational Phaser Game Template" />
+      <meta name="msapplication-starturl" content="./" />
+      <link rel="icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+      <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+      <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+      <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+      <title>Educational Phaser Game Template</title>
+      <noscript>Please enable javascript to continue using this application.</noscript>
+      <!-- installs the serviceWorker -->
+      <!-- <script>
+         if ('serviceWorker' in navigator) {
+           window.addEventListener('load', () => {
+             navigator.serviceWorker.register('./sw.js')
+           })
+         }
+         </script> -->
+   </head>
+   <!---
+      <body>
+      <div id="phaser-game"></div>
+      <script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/beta/gen.vendors.0805bb80903235d40eaf.bundle.js"></script><script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/beta/gen.main.1a718f107d2af294cfc7.bundle.js"></script></body>
+      -->
+   <body>
+      <div id="main">
+         <h1 style>Asymptotic Explorer</h1>
+         <p>James Skripchuk</p>
+         <hr>
+         <h2>Introduction</h2>
+         <p>
+            Let’s say we both programmers, and we’re tasked to design an algorithm to sort our company's super secret data. We go our separate ways, work on the problem individually, and come together later to compare our initial results.
+         </p>
+         <p>
+            Turns out we both solved the problem a bit differently, but that’s okay! 
+            After some checking, we verified that 
+            <em>both of our algorithms are correct</em> and solve the problem. There’s one last question to ask:
+         </p>
+         <p class="center-text"><strong>Which algorithm is better?</strong></p>
+         <p>Well, <em>better</em> is a loaded word here. Right now, we'll just choose a better and more measurable metric: <strong>speed</strong>.</p>
+         <p class="center-text"><strong>Which algorithm is faster?</strong></p>
+         <hr>
+         <h2>Computer Clock Speed Changer</h2>
+         <p>
+            So why can't we just time our algorithms?
+         </p>
+         <p>
+            We've recorded the time it takes for two computers to run two different algorithms to solve the same problem for different input sizes.
+            Our local supercomputer is running Algorithm A, and our lousy laptop is running Algorithm B.
+         </p>
+         <p>
+            Which algorithm do you think is faster? Why?
+         </p>
+         <div id="cs-speed">
+            <table id ="timetable">
+               <tr id="row0">
+                  <td>Size of Input</td>
+               </tr>
+               <tr id="row1">
+                  <td>Supercomputer Time (A)</td>
+               </tr>
+               <tr id="row2">
+                  <td>Lousy Laptop Time (B)</td>
+               </tr>
+            </table>
+         </div>
+         <p>
+            Now, click the button below to test the algorithms on larger and larger inputs.
+         </p>
+         <script>
+            var time_1 = [1,2,3,4,5,6,7,8,9,10,100,1000]
+            var s1 = 3
+            var s2 = 21
+            var current_index = 5
+            
+             function addMoreRows(){
+               if(current_index < time_1.length){
+                 var innerHTML_0 = $("#row0").html()
+                 var innerHTML_1 = $("#row1").html()
+                 var innerHTML_2 = $("#row2").html()
+            
+                 innerHTML_0 += "<td>"+time_1[current_index]+"</td>"
+                 innerHTML_1 += "<td>"+time_1[current_index]*time_1[current_index]*s1+"</td>"
+                 innerHTML_2 += "<td>"+time_1[current_index]*s2+"</td>"
+                 current_index++;
+                 
+                 $("#row0").html(innerHTML_0)
+                 $("#row1").html(innerHTML_1)
+                 $("#row2").html(innerHTML_2)
+               }
+             }
+            
+             function genTimeTable(s1, s2) {
+               
+            
+               
+            
+            
+               var innerHTML_0 = $("#row0").html()
+               var innerHTML_1 = $("#row1").html()
+               var innerHTML_2 = $("#row2").html()
+               for (let n= 1; n < current_index; n++) {
+                 innerHTML_0 +="<td>"+time_1[n]+"</td>"
+                 innerHTML_1 += "<td>"+n*n*s1+"</td>"
+                 innerHTML_2 += "<td>"+n*s2+"</td>"
+               }
+               
+               $("#row0").html(innerHTML_0)
+               $("#row1").html(innerHTML_1)
+               $("#row2").html(innerHTML_2)
+             }
+             
+             function changeTimeTable(){
+               c1_speed = parseInt($("#c1_speed").val())
+               c2_speed = parseInt($("#c2_speed").val())
+               genTimeTable(c1_speed,c2_speed)
+             }
+             
+             genTimeTable(s1,s2)
+             
+         </script>
+         <div class="center">
+            <button id="morerows" onclick="addMoreRows()">Bigger Input Size!</button>
+            <p>
+               [Explain what this means]
+            </p>
+         </div>
+         <hr>
+         <h2>Big O Notation</h2>
+         <h3>Definition of Big O:</h3>
+         <div class = "def">
+            <p>\(f(n)\) is said to be \(O(g(n))\) if and only if</p>
+            <p>there exists <strong>positive constants</strong> \(n_0\) and \(c\) such that</p>
+            <p>\(f(n) \leq cg(n)\) for all \(n \geq n_0\)</p>
+         </div>
+         <p>Okay, that's a lot of math notation at once. Here's an example:</p>
+         <table>
+            <tr>
+               <td>
+                  <p>\(f(n) = n^3+2n^2+4\)</p>
+               </td>
+               <td>
+                  <p>\(c = 4\)</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <p>\(g(n) = n^3\)</p>
+               </td>
+               <td>
+                  <p>\(n_0 = 4\)</p>
+               </td>
+            </tr>
+         </table>
+         <div class="colored-example" style="background-color:#2ecc71; margin-top:20px">
+        <p class="center-text">\(n^3+2n^2+4\) is  \(O(n^3)\), because \(n^3+2n^2+4 \leq 4n^3\) for all \(n \geq 4\)</p>
+        </div>
+        <p>Look at the graph below to see a visual example of this relationship.</p>
+        <p>As you can see, for all \(n \geq 4\) (represented by the vertical dotted line), \(f(x) \leq cg(x)\)</p>
+          <div id="example1-plot"></div>
+         
+         <script>
+            function drawExample1(div_name, c,n=4,paint_color="green",
+              f_x_str = "x^3+2x^2+4",
+              g_x_str = "x^3",
+              max_x = 5,
+              max_y = 256
+            ){
+              f_x = math.compile(f_x_str)
+              g_x = math.compile(c+g_x_str)
+            
+              const xValues = math.range(0, 10, 0.01).toArray()
+              
+              const fyValues = xValues.map(function (x) {
+                return f_x.evaluate({x:x})
+              })
+              
+              const gyValues = xValues.map(function (x) {
+                return g_x.evaluate({x:x})
+              })
+            
+              var trace1 = {
+                    x: xValues,
+                    y: fyValues,
+                    name: f_x_str,
+                    type: 'scatter'
+                  }
+              var trace2 = {
+                x: xValues,
+                y: gyValues,
+                name: c+g_x_str,
+                type: 'scatter',
+                fill: 'tonexty'
+              }
+            
+              var trace3 = {
+                  x: [n],
+                  y: [f_x.evaluate({x:n})],
+                  name: "Intersection",
+                  mode: 'markers',
+                  type: 'scatter',
+                  marker: {
+                      size: 10
+                  }
+                  };
+            
+              const data = [trace1,trace2]
+              
+              var layout = {
+              title: "f(x) & c*g(x)",
+              xref: 'paper', 
+              xaxis: {
+                  range: [0,max_x]
+              },
+              yaxis:{
+                  range:[0,max_y]
+              },
+              shapes: [{
+                type: 'line',
+                x0: n,
+                y0: 0,
+                x1: n,
+                yref: 'paper',
+                y1: 1,
+                line: {
+                  color: paint_color,
+                  width: 1.5,
+                  dash: 'dot'
+                }
+              }]
+              };
+            
+              Plotly.newPlot(div_name, data,layout,{displayModeBar: true})
+            }
+            
+            drawExample1("example1-plot",4);
+            
+         </script>
+         <p>Remember, \(n_0\) and \(c\) can be <strong>anything</strong>, as long as the statement \(f(n) \leq cg(n)\) for all \(n \geq n_0\) holds.</p>
+         <p>In the above example, you can see that the Big O condition also holds true for \(c=4\) and \(n_0=3\).</p>
+         <p>The same is true for \(c=4\) and \(n_0=2\)</p>
+         <p>But it is <strong>not</strong> true for \(c=4\) and \(n_0=1\)</p>
+         <p>Below you can test different values of \(c\) and \(n_0\) to see if they make the Big O statement true.</p>
+         
+         
+         <div id="sliders">
+            <div style="float:left">
+             <p id="slider-c">\(c=4\)</p>
+             <input type="range" id="example2-c" name="quantity" min="1" max="10" value="4" step=0.5>
+           </div>
+           <div style="float:left">
+             <p id = "slider-n">\(n_0=4\)
+             </p>
+             
+           <input type="range" id="example2-n" name="quantity" min="0" max="5" value="4" step="0.5">
+             </div>
+         </div>
+
+         <div class = "colored-example" id="colored-example1">
+            <p class="center-text" id="example2-text">\(n^3+2n^2+4\) is \(O(n^3)\), because \(n^3+2n^2+4\leq 4n^3\) for all \(n \geq 4\)</p>
+            <p id="example2-correct" class="center-text">Valid \(c\) and \(n_0\)</p>
+         </div>
+         
+         <div id="example2-plot"></div>
+         <script>
+            green_color = "#2ecc71"
+            red_color = "#ff7675"
+            function updateExample2(){
+              var c = parseFloat($("#example2-c").val())
+              var n = parseFloat($("#example2-n").val())
+            
+              var txt = '\\(n^3+2n^2+4\\) is  \\(O(n^3)\\), because \\(n^3+2n^2+4 \\leq '+c+'n^3\\) for all \\(n \\geq '+n+'\\)'
+              
+              $("#example2-text").text(txt);
+              $("#slider-c").text('\\(c='+c+"\\)");
+              $("#slider-n").text('\\(n='+n+"\\)");
+              MathJax.typeset(["#example2-text","#slider-c","#slider-n"])
+
+              
+            
+              
+              paint_color=red_color
+              result_text = "Invalid \\(c\\) and \\(n_0\\)"
+              if(c*n*n*n >= n*n*n+2*n*n+4){
+                paint_color = green_color
+                result_text = "Valid \\(c\\) and \\(n_0\\)"
+              }
+            
+              $("#colored-example1").css("background-color",paint_color)
+              $("#example2-correct").text(result_text);
+              MathJax.typeset(["#example2-correct"])
+            
+              drawExample1("example2-plot",c,n,paint_color);
+            }
+            
+            $("#example2-c").on("input",function() {
+              updateExample2()
+            });
+            
+            $("#example2-n").on("input",function() {
+              updateExample2()
+            });
+            
+            $("#colored-example1").css("background-color",green_color)
+            
+            drawExample1("example2-plot",4);
+         </script>
+
+         <p>You may be wondering how we calculated this pair of \(c\) and \(n_0\). Below I've detailed a consistent procedure for how you can derive \(c\) and \(n_0\)</p>
+         <hr>
+         <h3>Calculation Example</h3>
+         <p>The way you can prove a Big O expression is by <em>replacing lower order terms with higher ones and validating those decisions.</em></p>
+         <p>We replace these lower order terms, until we get into the form: \(f(x) \leq cg(x)\) for \(n \geq n_0\)</p>
+         <p>Here is how I did this procedure with the above example:</p>
+         <div class="def">
+         <p>\(f(n) = n^3+2n^2+4\)</p>
+         <p>\(g(n) = n^3\)</p>
+
+         <p>First we remove the \(2n^2\) term.</p>
+         <p>\(n^3+2n^2+4 \leq n^3+2n^3+4\) &nbsp;&nbsp;since \(n^2 \leq n^3\) for \(n \geq 1\) </p>
+         <p>Then we remove the \(4\) term.</p>
+         <p>\(n^3+2n^3+4 \leq n^3+2n^3+n^3\) &nbsp;&nbsp;since \(4 \leq n^3\) for \(n \geq 4\)</p>
+
+         <p>\(n^3+2n^3+n^3 = 4n^3\)</p>
+         <p>Therefore, using the above two expressions, we can safely say:</p>
+         <p>\(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\)</p>
+         <p>Now doesn't this look familiar? This is the definition of Big O where  \(c=4\) and \(n_0=4\)</p>
+
+         <p>Therefore, using all the above information:</p>
+         <p class="center-text">\(n^3+2n^2+4\) is \(O(n^3)\), since \(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\) </p>
+        </div>
+
+         
+         <h3>Your Turn</h3>
+         <p class="center-text">Prove that \(n^2+2n\) is  \(O(n^2)\) by finding a suitable \(n_0\) and \(c\)</p>
+         <div class="colored-example" id="colored-example2">
+            <p class="center-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
+            <p class="center-text">Choose a \(c\) and \(n_0\)</p>
+         </div>
+         
+         <input type="text" id="example3-c">
+         <input type="text" id="example3-n">
+         <button type="button">Click Me!</button>
+
+         <div id="example3-plot"></div>
+
+
+         <script>
+
+
+            drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
+
+            $("#colored-example2").css("background-color",green_color)
+         </script>
+      </div>
+   </body>
+</html>

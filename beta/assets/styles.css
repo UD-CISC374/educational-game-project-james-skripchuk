@@ -1,0 +1,67 @@
+body{
+    background-color: whitesmoke;
+    font-family: 'Roboto';
+}
+html { 
+    font-size: 24px
+    
+}
+
+.def{
+    background-color: #dba7e6;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#main{
+    margin-right: 18%;
+    margin-left: 18%;
+}
+
+p{
+    font-size: 1em;
+}
+
+hr{
+    color:black;
+}
+
+table{
+    border-collapse: collapse;
+    margin: auto;
+}
+
+table, th, td{
+    border: 3px solid black;
+}
+
+.colored-example{
+    padding:5px;
+    border-radius: 10px;
+}
+
+#morerows{
+    margin:auto;
+    padding: 10px;
+}
+
+th,td{
+    padding: 10px;
+}
+
+.center {
+    margin: auto;
+}
+
+.center-text{
+    text-align: center;
+}
+
+h1{
+}
+
+h3{
+}
+
+h2{
+}
