@@ -28,6 +28,9 @@
       <link rel="icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
       <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
       <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+      <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/highlight.min.js"></script>
       <title>Educational Phaser Game Template</title>
       <noscript>Please enable javascript to continue using this application.</noscript>
       <!-- installs the serviceWorker -->
@@ -44,6 +47,8 @@
       <div id="phaser-game"></div>
       <script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/beta/gen.vendors.0805bb80903235d40eaf.bundle.js"></script><script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/beta/gen.main.1a718f107d2af294cfc7.bundle.js"></script></body>
       -->
+      <script>hljs.initHighlightingOnLoad();</script>
+
    <body>
       <div id="main">
          <h1 style>Asymptotic Explorer</h1>
@@ -62,91 +67,108 @@
          <p>Well, <em>better</em> is a loaded word here. Right now, we'll just choose a better and more measurable metric: <strong>speed</strong>.</p>
          <p class="center-text"><strong>Which algorithm is faster?</strong></p>
          <hr>
-         <h2>Computer Clock Speed Changer</h2>
+         <h2>Counting Steps</h2>
          <p>
-            So why can't we just time our algorithms?
+            So why can't we just time our algorithms with a stopwatch?
          </p>
-         <p>
-            We've recorded the time it takes for two computers to run two different algorithms to solve the same problem for different input sizes.
-            Our local supercomputer is running Algorithm A, and our lousy laptop is running Algorithm B.
-         </p>
-         <p>
-            Which algorithm do you think is faster? Why?
-         </p>
-         <div id="cs-speed">
-            <table id ="timetable">
-               <tr id="row0">
-                  <td>Size of Input</td>
-               </tr>
-               <tr id="row1">
-                  <td>Supercomputer Time (A)</td>
-               </tr>
-               <tr id="row2">
-                  <td>Lousy Laptop Time (B)</td>
-               </tr>
-            </table>
-         </div>
-         <p>
-            Now, click the button below to test the algorithms on larger and larger inputs.
-         </p>
-         <script>
-            var time_1 = [1,2,3,4,5,6,7,8,9,10,100,1000]
-            var s1 = 3
-            var s2 = 21
-            var current_index = 5
-            
-             function addMoreRows(){
-               if(current_index < time_1.length){
-                 var innerHTML_0 = $("#row0").html()
-                 var innerHTML_1 = $("#row1").html()
-                 var innerHTML_2 = $("#row2").html()
-            
-                 innerHTML_0 += "<td>"+time_1[current_index]+"</td>"
-                 innerHTML_1 += "<td>"+time_1[current_index]*time_1[current_index]*s1+"</td>"
-                 innerHTML_2 += "<td>"+time_1[current_index]*s2+"</td>"
-                 current_index++;
-                 
-                 $("#row0").html(innerHTML_0)
-                 $("#row1").html(innerHTML_1)
-                 $("#row2").html(innerHTML_2)
-               }
-             }
-            
-             function genTimeTable(s1, s2) {
-               
-            
-               
-            
-            
-               var innerHTML_0 = $("#row0").html()
-               var innerHTML_1 = $("#row1").html()
-               var innerHTML_2 = $("#row2").html()
-               for (let n= 1; n < current_index; n++) {
-                 innerHTML_0 +="<td>"+time_1[n]+"</td>"
-                 innerHTML_1 += "<td>"+n*n*s1+"</td>"
-                 innerHTML_2 += "<td>"+n*s2+"</td>"
-               }
-               
-               $("#row0").html(innerHTML_0)
-               $("#row1").html(innerHTML_1)
-               $("#row2").html(innerHTML_2)
-             }
-             
-             function changeTimeTable(){
-               c1_speed = parseInt($("#c1_speed").val())
-               c2_speed = parseInt($("#c2_speed").val())
-               genTimeTable(c1_speed,c2_speed)
-             }
-             
-             genTimeTable(s1,s2)
-             
-         </script>
-         <div class="center">
-            <button id="morerows" onclick="addMoreRows()">Bigger Input Size!</button>
-            <p>
-               [Explain what this means]
-            </p>
-         </div>
+         <p>That might work locally, but what if we wanted to implement our algorithm on multiple computers?</p>
+         <p>Different computers run at different speed; so the same algorithm will run faster or slower based on the computer it runs on.</p>
+         <p>This makes it difficult to compare algorithms directly, so what we need is a hardware agnostic method of comparing algorithms.</p>
+         <p>We can do this by <strong>counting the number of steps the algorithm takes.</strong></p>
+         <hr>
+         <h2>The RAM Model of Computation</h2>
+         <p>We can use <strong>The RAM Model of Computation</strong> as a guide to count steps in an algorithm.</p>
+         <p>In the RAM Model, we have <strong>Simple</strong> and <strong>Complex</strong> operations.</p>
+         <p><strong>Simple operations</strong> take one step. Simple operations include:</p>
+         <ul>
+           <li>Addition</li>
+           <li>Multiplication</li>
+           <li>Division</li>
+           <li>Subtraction</li>
+           <li>Memory Access</li>
+           <li>If statement branches</li>
+         </ul>
+
+         <p><strong>Complex operations</strong> may take more than one step. They must be analyzed independently.</p>
+         <p>Complex Operations include:</p>
+         <ul>
+           <li>Loops</li>
+           <li>Function calls</li>
+         </ul>
+
+         Let's analyze some programs!
+         <hr>
+
+
+         <h3>Example 1</h3>
+         <pre><code class="python">
+          def do_math(number):
+            result = (number+5)*3
+            return result
+         </code></pre>
+         <p>This code has a total of <strong>3</strong> operations. Addition, multiplication, and saving the variable result.</p>
+
+         <p>Things get much more interesting if the runtime of the program depends on the size of the input.</p>
+
+         <h3>Example 2</h3>
+         <pre><code class="python">
+            def print_out_list(list_of_numbers):
+              for num in list_of_numbers:
+                print(num+5)
+
+              print("Done")
+           </code></pre>
+
+           <p>For each item in the list of numbers, we perform <strong>2</strong> operations. Adding 5 to num, and printing.</p>
+           <p>If we say that the list contains \(n\) items, then that loop takes \(2n\) steps.</p>
+           <p>Now if we count the final print statement as <strong>1</strong> step, we can represent the number of steps as a function of the input.</p>
+           <p>\(f(n)=2n+1\)</p>
+
+         <h3>Example 3</h3>
+         <pre><code class="python">
+            def print_out_list_pairs(list_of_numbers):
+              for num_1 in list_of_numbers:
+                for num_2 in list_of_numbers:
+                  print(num_1+num_2)
+           </code></pre>
+         <hr>
+
+         <p>Here we have a nested loop.</p>
+         <p>Like before inner loop for num_2 has <strong>2</strong> operations for each item in the list.</p>
+         <p>Therefore, it takes \(2n\) steps.</p>
+         <p>However, due to the outer loop for num_1, all of these \(2n\) steps is repeated \(n\) times.</p>
+         <p>Thus, the total amount of steps would be \(2n*n=2n^2\)</p>
+         <p>The total amount of steps for this algorithm would be \(f(n)=2n^2\)</p>
+
+         <h3>Takeaway</h3>
+         <p>Now you can see how we can represent the run time of algorithms in terms by the number of steps they take.</p>
+         <p>However, <strong>how does this help us?</strong></p>
+         <hr>
+        <h2>Bounding</h2>
+        <p>Those past examples were relatively straightforward, however <strong>real life algorithms aren't that simple.</strong></p>
+        <p>The amount of steps an algorithm can take can be determined by many factors.</p>
+        <p>The algorithm could take more time if the input is even, if the size of the input is greater than a certain number, or a host of other edge cases.</p>
+        <p>This means that not every algorithm can be described by a nice and neat function.</p>
+        <p>Even if the algorithms could be described by neat functions, comparing them at a glance is difficult</p>
+        <p>For example, which algorithm do you think is faster? (This is a rhetorical question)</p>
+        <p>\(f(n)=sin(n+n^2)+400n^3-17n^2+3n+1000\)</p>
+        <p>\(g(n)=4n^3+1000x^2+0.5(2^n)\)</p>
+        <p>Maybe if there was a way to <strong>classify</strong> these algorithms, and then instead of comparing the algorithms directly, we could just compare the classes that each algorithm is in.</p>
+
+        <h3>Analogy: Weight Classes</h3>
+        <p>
+            In many sports, there exist weight classes. A battle between two lightweight fighters would be equally matched and it would be hard to compare the two without a nuanced understanding of their strategy and physiology. 
+        </p>
+
+        <p>However, in a match between a 300 pound heavyweight and a 100 pound lightweight; it’s much easier to make the comparison of who has the advantage based on sheer power alone.
+          </p>
+
+        <p>We can do the same sort of thing by proving our algorithm <strong>never exceeds an upper bound</strong></p>
+        <p>If we can prove that a complicated function (such as above) is bounded by a simpler function, we can compare two algorithms based on their simplified upper bounds, rather than their complex direct functions.</p>
+        <p>So like our boxers, these simplified upper bounds serve as our weight classes.</p>
+        <p>We can do this by making use of <strong>Big O Notation</strong></p>
+
+
          <hr>
          <h2>Big O Notation</h2>
          <h3>Definition of Big O:</h3>
@@ -356,23 +378,54 @@
          <h3>Your Turn</h3>
          <p class="center-text">Prove that \(n^2+2n\) is  \(O(n^2)\) by finding a suitable \(n_0\) and \(c\)</p>
          <div class="colored-example" id="colored-example2">
-            <p class="center-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
-            <p class="center-text">Choose a \(c\) and \(n_0\)</p>
+            <p class="center-text" id="example3-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
+            <p class="center-text" id="example3-correct">Choose a \(c\) and \(n_0\)</p>
          </div>
-         
-         <input type="text" id="example3-c">
-         <input type="text" id="example3-n">
-         <button type="button">Click Me!</button>
+         <p>Enter your result below:</p>
+         <input type="text" id="example3-c" placeholder="Type in c here!">
+         <input type="text" id="example3-n" placeholder="Type in n_0 here!">
+         <button type="button" id="example3-butt">Check if I'm Right!</button>
 
-         <div id="example3-plot"></div>
-
-
+         <div id="example3-plot" style="visibility: hidden;"></div>
          <script>
+            function updateExample3(){
+              console.log("example3")
+              var c = parseFloat($("#example3-c").val())
+              var n = parseFloat($("#example3-n").val())
+            
+              var txt = '\\(n^2+2n\\) is  \\(O(n^2)\\), because \\(n^2+2n \\leq '+c+'n^2\\) for all \\(n \\geq '+n+'\\)'
+              
+              $("#example3-text").text(txt);
+              MathJax.typeset(["#example3-text"])
 
+              
+            
+              
+              paint_color=red_color
+              result_text = "Invalid \\(c\\) and \\(n_0\\)"
+              if(c*n*n >= n*n+2*n){
+                paint_color = green_color
+                result_text = "Valid \\(c\\) and \\(n_0\\)"
+              }
+            
+              $("#colored-example2").css("background-color",paint_color)
+              $("#example3-correct").text(result_text);
+              MathJax.typeset(["#example3-correct"])
+            
+              drawExample1("example3-plot",c,n,paint_color,"x^2+2x","x^2",4,100);
+            }
+            
+            
+            
+            $("#example3-butt").click(function() {
+              //alert("YO")
+              $("#example3-plot").css("visibility",'visible')
+              updateExample3()
+            });
 
-            drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
+          drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
 
-            $("#colored-example2").css("background-color",green_color)
+          $("#colored-example2").css("background-color",'#dba7e6')
          </script>
       </div>
    </body>

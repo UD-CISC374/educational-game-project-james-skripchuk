@@ -40,7 +40,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/betagen.vendors.0805bb80903235d40eaf.bundle.js"
   },
   {
-    "revision": "9d8a7d84bba65ba17f80f048eb48bf3b",
+    "revision": "d70d67931bbd9b74d10ce7cb235adc64",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/betaindex.html"
   },
   {
