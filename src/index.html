@@ -378,23 +378,54 @@
          <h3>Your Turn</h3>
          <p class="center-text">Prove that \(n^2+2n\) is  \(O(n^2)\) by finding a suitable \(n_0\) and \(c\)</p>
          <div class="colored-example" id="colored-example2">
-            <p class="center-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
-            <p class="center-text">Choose a \(c\) and \(n_0\)</p>
+            <p class="center-text" id="example3-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
+            <p class="center-text" id="example3-correct">Choose a \(c\) and \(n_0\)</p>
          </div>
-         
-         <input type="text" id="example3-c">
-         <input type="text" id="example3-n">
-         <button type="button">Click Me!</button>
+         <p>Enter your result below:</p>
+         <input type="text" id="example3-c" placeholder="Type in c here!">
+         <input type="text" id="example3-n" placeholder="Type in n_0 here!">
+         <button type="button" id="example3-butt">Check if I'm Right!</button>
 
-         <div id="example3-plot"></div>
-
-
+         <div id="example3-plot" style="visibility: hidden;"></div>
          <script>
+            function updateExample3(){
+              console.log("example3")
+              var c = parseFloat($("#example3-c").val())
+              var n = parseFloat($("#example3-n").val())
+            
+              var txt = '\\(n^2+2n\\) is  \\(O(n^2)\\), because \\(n^2+2n \\leq '+c+'n^2\\) for all \\(n \\geq '+n+'\\)'
+              
+              $("#example3-text").text(txt);
+              MathJax.typeset(["#example3-text"])
 
+              
+            
+              
+              paint_color=red_color
+              result_text = "Invalid \\(c\\) and \\(n_0\\)"
+              if(c*n*n >= n*n+2*n){
+                paint_color = green_color
+                result_text = "Valid \\(c\\) and \\(n_0\\)"
+              }
+            
+              $("#colored-example2").css("background-color",paint_color)
+              $("#example3-correct").text(result_text);
+              MathJax.typeset(["#example3-correct"])
+            
+              drawExample1("example3-plot",c,n,paint_color,"x^2+2x","x^2",4,100);
+            }
+            
+            
+            
+            $("#example3-butt").click(function() {
+              //alert("YO")
+              $("#example3-plot").css("visibility",'visible')
+              updateExample3()
+            });
 
-            drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
+          drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
 
-            $("#colored-example2").css("background-color",green_color)
+          $("#colored-example2").css("background-color",'#dba7e6')
          </script>
       </div>
    </body>
