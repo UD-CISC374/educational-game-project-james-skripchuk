@@ -64,6 +64,8 @@
     "workbox-webpack-plugin": "^4.3.1"
   },
   "dependencies": {
-    "phaser": "^3.22.0"
+    "ify-loader": "^1.1.0",
+    "phaser": "^3.22.0",
+    "plotly.js": "^1.54.1"
   }
 }
