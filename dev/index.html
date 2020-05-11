@@ -7,7 +7,6 @@
       <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="assets/styles.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-      <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js"></script>
       <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       <script id="MathJax-script" async
          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -43,6 +42,7 @@
            })
          }
          </script> -->
+
    </head>
    <!---
       <body>
@@ -52,7 +52,6 @@
       <script>hljs.initHighlightingOnLoad();</script>
 
    <body>
-     <script>//Plotly = require('plotly.js/dist/plotly');</script>
       <div id="main">
          <h1 style>Asymptotic Explorer</h1>
          <p>James Skripchuk</p>
@@ -224,6 +223,7 @@
               g_x = math.compile(c+g_x_str)
               z_x = math.compile(c_1+g_x_str)
             
+              ww=3
               const xValues = math.range(0, 10, 0.01).toArray()
               
               const fyValues = xValues.map(function (x) {

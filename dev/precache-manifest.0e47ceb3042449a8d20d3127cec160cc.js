@@ -24,6 +24,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devassets/icons/icons8-game-controller-16.png"
   },
   {
+    "revision": "28673181bdeba7da7fb1cccbfcc738b3",
+    "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devassets/plotly-latest.min.js"
+  },
+  {
     "revision": "dd207854e30d6444bb6d020e44d32a79",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devassets/styles.css"
   },
@@ -40,7 +44,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devgen.vendors.0805bb80903235d40eaf.bundle.js"
   },
   {
-    "revision": "1614d6073961dc7f72f214344e1e4884",
+    "revision": "a3e12298a53c3c14e6b1299c2c087771",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devindex.html"
   },
   {
