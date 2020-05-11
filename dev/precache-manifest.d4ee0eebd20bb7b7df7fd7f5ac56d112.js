@@ -44,11 +44,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devgen.vendors.0805bb80903235d40eaf.bundle.js"
   },
   {
-    "revision": "aa40ecc51b68bda615bbc52927ea9b4a",
+    "revision": "5dabf641c1586a3c4fc094df2fba8bee",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devindex.html"
   },
   {
-    "revision": "003187cab0ecf7a20e343e2ba6db4a34",
+    "revision": "28673181bdeba7da7fb1cccbfcc738b3",
+    "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devjs/plotly-latest.min.js"
+  },
+  {
+    "revision": "2a6f81baedb72345ef29314e4000e008",
     "url": "/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/devmanifest.json"
   },
   {
