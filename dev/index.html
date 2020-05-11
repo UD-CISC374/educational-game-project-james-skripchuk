@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <!--<script src="/scripts/plotly-latest.min.js"></script>-->
+
       <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="assets/styles.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -9,7 +12,6 @@
       <script id="MathJax-script" async
          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="https://unpkg.com/mathjs@6.6.4/dist/math.min.js"></script>
-      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
       <meta charset="UTF-8" />
       <meta
          name="viewport"
@@ -50,6 +52,7 @@
       <script>hljs.initHighlightingOnLoad();</script>
 
    <body>
+     <script>//Plotly = require('plotly.js/dist/plotly');</script>
       <div id="main">
          <h1 style>Asymptotic Explorer</h1>
          <p>James Skripchuk</p>
@@ -519,7 +522,7 @@
         <p>\(n + 2n = 3n\) &nbsp;&nbsp;
         <p>Therefore, using the above two expressions, we can safely say:</p>
         <p>\(n^3+2n^2+4 \geq 3n\) for \(n \geq 1\)</p>
-        <p>Again, doesn't this look familiar? This is the definition of Big \Omega where  \(c=3\) and \(n_0=1\)</p>
+        <p>Again, doesn't this look familiar? This is the definition of Big Omega where  \(c=3\) and \(n_0=1\)</p>
 
         <p>Therefore, using all the above information:</p>
         
@@ -672,8 +675,8 @@
           
 
           if(c >= 2 && c_1 <=2){
-            if(c*n > 2*n+4){
-              if(c_1*n < 2*n+4){
+            if(c*n >= 2*n+4){
+              if(c_1*n <= 2*n+4){
                 paint_color = green_color
                 result_text = "Valid \\(c_0\\),\\(c_1\\) and \\(n_0\\)"
               }
@@ -706,7 +709,7 @@
     <p>Remember, the reason that we use these notations is to put a general bound on the algorithms we right, so we can easily talk about them in a general case.</p>
     <p>Instead of having to recall the exact runtime of an algorithm, we can instead talk about it's Big O or Big Omega bounds.</p>
     <p>However, <strong>you should always be careful when using asymptotic analysis</strong>, because sometimes you may <em>need</em> to go into the specifics!</em></p>
-    <p>For example, while one algorithm may be \(O(2^n)\), and the other is \(O(n^5\), you may at a glance think that the second one is "better".</p>
+    <p>For example, while one algorithm may be \(O(2^n)\), and the other is \(O(n^5)\), you may at a glance think that the second one is "better".</p>
     <p>But think about this: What if the actual formulas were \(2^n+5\) and \(30000n^5+2000n^2\)</p>
     <p>If you know you're dealing with a small amount of data, the exponential algorithm may be the better choice!</p>
     <p>So remember, while Big O is a good tool for getting a general feel for the complexity of algorithms, it's not a silver bullet!</p>
