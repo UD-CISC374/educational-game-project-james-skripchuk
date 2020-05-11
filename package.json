@@ -6,12 +6,12 @@
   "main": "index.js",
   "game": {
     "url": "https://github.com/UD-CISC374/educational-game-project-james-skripchuk",
-    "shortName": "EdGame",
-    "name": "Educational Phaser Game Template"
+    "shortName": "Asymptotic",
+    "name": "Asymptotic Explorer"
   },
   "author": {
-    "name": "Austin Cory Bart",
-    "url": "https://github.com/acbart"
+    "name": "James Skripchuk",
+    "url": "https://github.com/jskripchuk"
   },
   "repository": {
     "type": "git",
