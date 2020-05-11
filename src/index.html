@@ -7,7 +7,6 @@
       <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="assets/styles.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-      <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js"></script>
       <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       <script id="MathJax-script" async
          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -43,6 +42,7 @@
            })
          }
          </script> -->
+
    </head>
    <!---
       <body>
@@ -52,7 +52,6 @@
       <script>hljs.initHighlightingOnLoad();</script>
 
    <body>
-     <script>//Plotly = require('plotly.js/dist/plotly');</script>
       <div id="main">
          <h1 style>Asymptotic Explorer</h1>
          <p>James Skripchuk</p>
@@ -224,6 +223,7 @@
               g_x = math.compile(c+g_x_str)
               z_x = math.compile(c_1+g_x_str)
             
+              ww=3
               const xValues = math.range(0, 10, 0.01).toArray()
               
               const fyValues = xValues.map(function (x) {
@@ -709,7 +709,7 @@
     <p>Remember, the reason that we use these notations is to put a general bound on the algorithms we right, so we can easily talk about them in a general case.</p>
     <p>Instead of having to recall the exact runtime of an algorithm, we can instead talk about it's Big O or Big Omega bounds.</p>
     <p>However, <strong>you should always be careful when using asymptotic analysis</strong>, because sometimes you may <em>need</em> to go into the specifics!</em></p>
-    <p>For example, while one algorithm may be \(O(2^n)\), and the other is \(O(n^5\), you may at a glance think that the second one is "better".</p>
+    <p>For example, while one algorithm may be \(O(2^n)\), and the other is \(O(n^5)\), you may at a glance think that the second one is "better".</p>
     <p>But think about this: What if the actual formulas were \(2^n+5\) and \(30000n^5+2000n^2\)</p>
     <p>If you know you're dealing with a small amount of data, the exponential algorithm may be the better choice!</p>
     <p>So remember, while Big O is a good tool for getting a general feel for the complexity of algorithms, it's not a silver bullet!</p>
