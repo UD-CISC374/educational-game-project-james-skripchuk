@@ -779,6 +779,18 @@
     $.post(UpdateQueryString('y', getScrollPercent()));
   }
 
+  $("input").on("input",function() {
+      var log_str = UpdateQueryString(this.id, $(this).val());
+      $.post(log_str);
+  });
+
+  $("button").on("click",function() {
+    var log_str = UpdateQueryString(this.id, true);
+    $.post(log_str);
+  });
+
+
+
   var INTERVAL_DELAY = 1000 * 10;
 
   $(document).ready(function() {
