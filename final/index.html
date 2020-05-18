@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165939416-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'UA-165939416-1');
+      </script>
+
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+      <!--<script src="/scripts/plotly-latest.min.js"></script>-->
+      <script src="js/plotly-latest.min.js"></script>
+
+      <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="assets/styles.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async
+         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="https://unpkg.com/mathjs@6.6.4/dist/math.min.js"></script>
+      <meta charset="UTF-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+         />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta name="theme-color" content="#FF0000" />
+      <link rel="manifest" href="./manifest.json" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="application-name" content="Asymptotic Explorer" />
+      <meta name="apple-mobile-web-app-title" content="Asymptotic Explorer" />
+      <meta name="msapplication-starturl" content="./" />
+      <link rel="icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+      <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+      <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+      <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+      <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/highlight.min.js"></script>
+      <title>Asymptotic Explorer</title>
+      <noscript>Please enable javascript to continue using this application.</noscript>
+      <!-- installs the serviceWorker -->
+      <!-- <script>
+         if ('serviceWorker' in navigator) {
+           window.addEventListener('load', () => {
+             navigator.serviceWorker.register('./sw.js')
+           })
+         }
+         </script> -->
+
+   </head>
+   <!---
+      <body>
+      <div id="phaser-game"></div>
+      <script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/final/gen.vendors.0805bb80903235d40eaf.bundle.js"></script><script type="text/javascript" src="/https://github.com/UD-CISC374/educational-game-project-james-skripchuk/final/gen.main.83727fcd584dce04eede.bundle.js"></script></body>
+      -->
+      <script>hljs.initHighlightingOnLoad();</script>
+
+   <body>
+      <div id="main">
+         <h1 style>Asymptotic Explorer</h1>
+         <p>By James Skripchuk</p>
+         <p><strong>IMPORTANT Author's Note</strong>: There's a rare bug where Plotly doesn't load on some browsers. If you scroll down and don't see any graphs and the site says to interact with the graphs, refresh your page. That should fix it.</p>
+         <hr>
+         <h2>Introduction</h2>
+         <p>
+            Let’s say we both programmers, and we’re tasked to design an algorithm to sort our company's super secret data. We go our separate ways, work on the problem individually, and come together later to compare our initial results.
+         </p>
+         <p>
+            Turns out we both solved the problem a bit differently, but that’s okay! 
+            After some checking, we verified that 
+            <em>both of our algorithms are correct</em> and solve the problem. There’s one last question to ask:
+         </p>
+         <p class="center-text"><strong>Which algorithm is better?</strong></p>
+         <p>Well, <em>better</em> is a loaded word here. Right now, we'll just choose a better and more measurable metric: <strong>speed</strong>.</p>
+         <p class="center-text"><strong>Which algorithm is faster?</strong></p>
+         <hr>
+         <h2>Counting Steps</h2>
+         <p>
+            So why can't we just time our algorithms with a stopwatch?
+         </p>
+         <p>That might work locally, but what if we wanted to implement our algorithm on multiple computers?</p>
+         <p>Different computers run at different speed; so the same algorithm will run faster or slower based on the computer it runs on.</p>
+         <p>This makes it difficult to compare algorithms directly, so what we need is a hardware agnostic method of comparing algorithms.</p>
+         <p>We can do this by <strong>counting the number of steps the algorithm takes.</strong></p>
+         <hr>
+         <h2>The RAM Model of Computation</h2>
+         <p>We can use <strong>The RAM Model of Computation</strong> as a guide to count steps in an algorithm.</p>
+         <p>In the RAM Model, we have <strong>Simple</strong> and <strong>Complex</strong> operations.</p>
+         <p><strong>Simple operations</strong> take one step. Simple operations include:</p>
+         <ul>
+           <li>Addition</li>
+           <li>Multiplication</li>
+           <li>Division</li>
+           <li>Subtraction</li>
+           <li>Memory Access</li>
+           <li>If statement branches</li>
+         </ul>
+
+         <p><strong>Complex operations</strong> may take more than one step. They must be analyzed independently.</p>
+         <p>Complex Operations include:</p>
+         <ul>
+           <li>Loops</li>
+           <li>Function calls</li>
+         </ul>
+
+         Let's analyze some programs!
+         <hr>
+
+
+         <h3>Example 1</h3>
+         <pre><code class="python">
+          def do_math(number):
+            result = (number+5)*3
+            return result
+         </code></pre>
+         <p>This code has a total of <strong>3</strong> operations. Addition, multiplication, and saving the variable result.</p>
+
+         <p>Things get much more interesting if the runtime of the program depends on the size of the input.</p>
+
+         <h3>Example 2</h3>
+         <pre><code class="python">
+            def print_out_list(list_of_numbers):
+              for num in list_of_numbers:
+                print(num+5)
+
+              print("Done")
+           </code></pre>
+
+           <p>For each item in the list of numbers, we perform <strong>2</strong> operations. Adding 5 to num, and printing.</p>
+           <p>If we say that the list contains \(n\) items, then that loop takes \(2n\) steps.</p>
+           <p>Now if we count the final print statement as <strong>1</strong> step, we can represent the number of steps as a function of the input.</p>
+           <p>\(f(n)=2n+1\)</p>
+
+         <h3>Example 3</h3>
+         <pre><code class="python">
+            def print_out_list_pairs(list_of_numbers):
+              for num_1 in list_of_numbers:
+                for num_2 in list_of_numbers:
+                  print(num_1+num_2)
+           </code></pre>
+         <hr>
+
+         <p>Here we have a nested loop.</p>
+         <p>Like before inner loop for num_2 has <strong>2</strong> operations for each item in the list.</p>
+         <p>Therefore, it takes \(2n\) steps.</p>
+         <p>However, due to the outer loop for num_1, all of these \(2n\) steps is repeated \(n\) times.</p>
+         <p>Thus, the total amount of steps would be \(2n*n=2n^2\)</p>
+         <p>The total amount of steps for this algorithm would be \(f(n)=2n^2\)</p>
+
+         <h3>Takeaway</h3>
+         <p>Now you can see how we can represent the run time of algorithms in terms by the number of steps they take.</p>
+         <p>However, <strong>how does this help us?</strong></p>
+         <hr>
+        <h2>Bounding</h2>
+        <p>Those past examples were relatively straightforward, however <strong>real life algorithms aren't that simple.</strong></p>
+        <p>The amount of steps an algorithm can take can be determined by many factors.</p>
+        <p>The algorithm could take more time if the input is even, if the size of the input is greater than a certain number, or a host of other edge cases.</p>
+        <p>This means that not every algorithm can be described by a nice and neat function.</p>
+        <p>Even if the algorithms could be described by neat functions, comparing them at a glance is difficult</p>
+        <p>For example, which algorithm do you think is faster? (This is a rhetorical question)</p>
+        <p>\(f(n)=sin(n+n^2)+400n^3-17n^2+3n+1000\)</p>
+        <p>\(g(n)=4n^3+1000x^2+0.5(2^n)\)</p>
+        <p>Maybe if there was a way to <strong>classify</strong> these algorithms, and then instead of comparing the algorithms directly, we could just compare the classes that each algorithm is in.</p>
+
+        <h3>Analogy: Weight Classes</h3>
+        <p>
+            In many sports, there exist weight classes. A battle between two lightweight fighters would be equally matched and it would be hard to compare the two without a nuanced understanding of their strategy and physiology. 
+        </p>
+
+        <p>However, in a match between a 300 pound heavyweight and a 100 pound lightweight; it’s much easier to make the comparison of who has the advantage based on sheer power alone.
+          </p>
+
+        <p>We can do the same sort of thing by proving our algorithm <strong>never exceeds an upper bound</strong></p>
+        <p>If we can prove that a complicated function (such as above) is bounded by a simpler function, we can compare two algorithms based on their simplified upper bounds, rather than their complex direct functions.</p>
+        <p>So like our boxers, these simplified upper bounds serve as our weight classes.</p>
+        <p>We can do this by making use of <strong>Big O Notation</strong></p>
+
+        
+
+
+
+         <hr>
+         <h2>Big O Notation</h2>
+         <h3>Definition of Big O:</h3>
+         <div class = "def">
+            <p>\(f(n)\) is said to be \(O(g(n))\) if and only if</p>
+            <p>there exists <strong>positive constants</strong> \(n_0\) and \(c\) such that</p>
+            <p>\(f(n) \leq cg(n)\) for all \(n \geq n_0\)</p>
+         </div>
+         <p>Okay, that's a lot of math notation at once. Here's an example:</p>
+         <table>
+            <tr>
+               <td>
+                  <p>\(f(n) = n^3+2n^2+4\)</p>
+               </td>
+               <td>
+                  <p>\(c = 4\)</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <p>\(g(n) = n^3\)</p>
+               </td>
+               <td>
+                  <p>\(n_0 = 4\)</p>
+               </td>
+            </tr>
+         </table>
+         <div class="colored-example" style="background-color:#2ecc71; margin-top:20px">
+        <p class="center-text">\(n^3+2n^2+4\) is  \(O(n^3)\), because \(n^3+2n^2+4 \leq 4n^3\) for all \(n \geq 4\)</p>
+        </div>
+        <p>Look at the graph below to see a visual example of this relationship.</p>
+        <p>As you can see, for all \(n \geq 4\) (represented by the vertical dotted line), \(f(x) \leq cg(x)\)</p>
+          <div id="example1-plot"></div>
+         
+         <script>
+            function drawExample1(div_name, c,n=4,paint_color="green",
+              f_x_str = "x^3+2x^2+4",
+              g_x_str = "x^3",
+              max_x = 5,
+              max_y = 256,
+              min_x = 0,
+              c_1 = -69,
+              shade=true
+            ){
+              console.log(c_1)
+              f_x = math.compile(f_x_str)
+              g_x = math.compile(c+g_x_str)
+              z_x = math.compile(c_1+g_x_str)
+            
+              ww=3
+              const xValues = math.range(0, 10, 0.01).toArray()
+              
+              const fyValues = xValues.map(function (x) {
+                return f_x.evaluate({x:x})
+              })
+              
+              const gyValues = xValues.map(function (x) {
+                return g_x.evaluate({x:x})
+              })
+
+              const zyValues = xValues.map(function (x) {
+                return z_x.evaluate({x:x})
+              })
+
+              shade_param = ""
+              if(shade){
+                shade_param = 'tonexty'
+              }
+
+            
+              var trace1 = {
+                    x: xValues,
+                    y: fyValues,
+                    name: f_x_str,
+                    type: 'scatter'
+                  }
+              var trace2 = {
+                x: xValues,
+                y: gyValues,
+                name: c+g_x_str,
+                type: 'scatter',
+                fill: shade_param
+              }
+            
+              var trace3 = {
+                  x: [n],
+                  y: [f_x.evaluate({x:n})],
+                  name: "Intersection",
+                  mode: 'markers',
+                  type: 'scatter',
+                  marker: {
+                      size: 10
+                  }
+                  };
+
+              var trace4 = {
+                x: xValues,
+                y: zyValues,
+                name: c_1+g_x_str,
+                type: 'scatter',
+                fill: shade_param
+              }
+            
+              data = [trace1,trace2]
+
+              if(c_1 != -69){
+                console.log("DRAWIN")
+                data = [trace1,trace2,trace4]
+              }
+              
+              var layout = {
+              title: "f(x) & c*g(x)",
+              xref: 'paper', 
+              xaxis: {
+                  range: [min_x,max_x]
+              },
+              yaxis:{
+                  range:[0,max_y]
+              },
+              shapes: [{
+                type: 'line',
+                x0: n,
+                y0: 0,
+                x1: n,
+                yref: 'paper',
+                y1: 1,
+                line: {
+                  color: paint_color,
+                  width: 1.5,
+                  dash: 'dot'
+                }
+              }]
+              };
+            
+              Plotly.newPlot(div_name, data,layout,{displayModeBar: true})
+            }
+            
+            drawExample1("example1-plot",4);
+            
+         </script>
+         <p>Remember, \(n_0\) and \(c\) can be <strong>anything</strong>, as long as the statement \(f(n) \leq cg(n)\) for all \(n \geq n_0\) holds.</p>
+         <p>In the above example, you can see that the Big O condition also holds true for \(c=4\) and \(n_0=3\).</p>
+         <p>The same is true for \(c=4\) and \(n_0=2\)</p>
+         <p>But it is <strong>not</strong> true for \(c=4\) and \(n_0=1\)</p>
+         <p>Below you can test different values of \(c\) and \(n_0\) to see if they make the Big O statement true.</p>
+         
+         
+         <div id="sliders">
+            <div style="float:left">
+             <p id="slider-c">\(c=4\)</p>
+             <input type="range" id="example2-c" name="quantity" min="1" max="10" value="4" step=0.5>
+           </div>
+           <div style="float:left">
+             <p id = "slider-n">\(n_0=4\)
+             </p>
+             
+           <input type="range" id="example2-n" name="quantity" min="0" max="5" value="4" step="0.5">
+             </div>
+         </div>
+
+         <div class = "colored-example" id="colored-example1">
+            <p class="center-text" id="example2-text">\(n^3+2n^2+4\) is \(O(n^3)\), because \(n^3+2n^2+4\leq 4n^3\) for all \(n \geq 4\)</p>
+            <p id="example2-correct" class="center-text">Valid \(c\) and \(n_0\)</p>
+         </div>
+         
+         <div id="example2-plot"></div>
+         <script>
+            green_color = "#2ecc71"
+            red_color = "#ff7675"
+            function updateExample2(){
+              var c = parseFloat($("#example2-c").val())
+              var n = parseFloat($("#example2-n").val())
+            
+              var txt = '\\(n^3+2n^2+4\\) is  \\(O(n^3)\\), because \\(n^3+2n^2+4 \\leq '+c+'n^3\\) for all \\(n \\geq '+n+'\\)'
+              
+              $("#example2-text").text(txt);
+              $("#slider-c").text('\\(c='+c+"\\)");
+              $("#slider-n").text('\\(n='+n+"\\)");
+              MathJax.typeset(["#example2-text","#slider-c","#slider-n"])
+
+              
+            
+              
+              paint_color=red_color
+              result_text = "Invalid \\(c\\) and \\(n_0\\)"
+              if(c*n*n*n >= n*n*n+2*n*n+4){
+                paint_color = green_color
+                result_text = "Valid \\(c\\) and \\(n_0\\)"
+              }
+            
+              $("#colored-example1").css("background-color",paint_color)
+              $("#example2-correct").text(result_text);
+              MathJax.typeset(["#example2-correct"])
+            
+              drawExample1("example2-plot",c,n,paint_color);
+            }
+            
+            $("#example2-c").on("input",function() {
+              updateExample2()
+            });
+            
+            $("#example2-n").on("input",function() {
+              updateExample2()
+            });
+            
+            $("#colored-example1").css("background-color",green_color)
+            
+            drawExample1("example2-plot",4);
+         </script>
+
+         <p>You may be wondering how we calculated this pair of \(c\) and \(n_0\). Below I've detailed a consistent procedure for how you can derive \(c\) and \(n_0\)</p>
+         <hr>
+         <h3>Calculation Example</h3>
+         <p>The way you can prove a Big O expression is by <em>replacing lower order terms with higher ones and validating those decisions.</em></p>
+         <p>We replace these lower order terms, until we get into the form: \(f(x) \leq cg(x)\) for \(n \geq n_0\)</p>
+         <p>Here is how I did this procedure with the above example:</p>
+         <div class="def">
+         <p>\(f(n) = n^3+2n^2+4\)</p>
+         <p>\(g(n) = n^3\)</p>
+
+         <p>First we remove the \(2n^2\) term.</p>
+         <p>\(n^3+2n^2+4 \leq n^3+2n^3+4\) &nbsp;&nbsp;since \(n^2 \leq n^3\) for \(n \geq 1\) </p>
+         <p>Then we remove the \(4\) term.</p>
+         <p>\(n^3+2n^3+4 \leq n^3+2n^3+n^3\) &nbsp;&nbsp;since \(4 \leq n^3\) for \(n \geq 4\)</p>
+
+         <p>\(n^3+2n^3+n^3 = 4n^3\)</p>
+         <p>Therefore, using the above two expressions, we can safely say:</p>
+         <p>\(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\)</p>
+         <p>Now doesn't this look familiar? This is the definition of Big O where  \(c=4\) and \(n_0=4\)</p>
+
+         <p>Therefore, using all the above information:</p>
+         <p class="center-text">\(n^3+2n^2+4\) is \(O(n^3)\), since \(n^3+2n^2+4 \leq 4n^3\) for \(n \geq 4\) </p>
+        </div>
+
+         
+         <h3>Your Turn</h3>
+         <p class="center-text">Prove that \(n^2+2n\) is  \(O(n^2)\) by finding a suitable \(n_0\) and \(c\)</p>
+         <div class="colored-example" id="colored-example2">
+            <p class="center-text" id="example3-text">\(n^2+2n\) is  \(O(n^2)\), because \(n^2+2n \leq cn^2\) for all \(n \geq n_0\)</p>
+            <p class="center-text" id="example3-correct">Choose a \(c\) and \(n_0\)</p>
+         </div>
+         <p>Enter your result below:</p>
+         <p>(If you get it wrong you can keep trying!)</p>
+
+         <input type="text" id="example3-c" placeholder="Type in c here!">
+         <input type="text" id="example3-n" placeholder="Type in n_0 here!">
+         <button type="button" id="example3-butt">Check if I'm Right!</button>
+
+         <div id="example3-plot" style="visibility: hidden;"></div>
+         <script>
+            function updateExample3(){
+              console.log("example3")
+              var c = parseFloat($("#example3-c").val())
+              var n = parseFloat($("#example3-n").val())
+            
+              var txt = '\\(n^2+2n\\) is  \\(O(n^2)\\), because \\(n^2+2n \\leq '+c+'n^2\\) for all \\(n \\geq '+n+'\\)'
+              
+              $("#example3-text").text(txt);
+              MathJax.typeset(["#example3-text"])
+
+              
+            
+              
+              paint_color=red_color
+              result_text = "Invalid \\(c\\) and \\(n_0\\)"
+              if(c*n*n >= n*n+2*n){
+                paint_color = green_color
+                result_text = "Valid \\(c\\) and \\(n_0\\)"
+              }
+            
+              $("#colored-example2").css("background-color",paint_color)
+              $("#example3-correct").text(result_text);
+              MathJax.typeset(["#example3-correct"])
+            
+              drawExample1("example3-plot",c,n,paint_color,"x^2+2x","x^2",4,100);
+            }
+            
+            
+            
+            $("#example3-butt").click(function() {
+              //alert("YO")
+              $("#example3-plot").css("visibility",'visible')
+              updateExample3()
+            });
+
+          drawExample1("example3-plot",1,1,"green","x^2+2x","x^2",4,100);
+
+          $("#colored-example2").css("background-color",'#dba7e6')
+         </script>
+      
+      <h3>Big O at a Glance</h3>
+      <p>Calculating the required \(c\) and \(n_0\) takes a lot of effort.</p>
+      <p>Luckily, there is a shortcut you can use to tell which Big O class a function belongs to.</p>
+      <p>This makes use of something which I call the <strong>dominance hierarchy</strong>.</p>
+      <p>The further you go up the hierarchy, the slower the runtime gets when \(n\) gets large.</p>
+      <h4>The Dominance Hierarchy:</h4>
+      <div class = "def">
+          <p class="center-text">
+            \(1 \ll \log n \ll \sqrt{n} \ll n \ll n \log n \ll n^2 \ll n^3 \ll n^c \ll c^n \ll n!\)
+          </p>
+        </div>
+
+      <p>We say that functions higher up on the hierarchy <strong>dominate</strong> functions slower than them.</p>
+      <p>So we say that \(n^2\) dominates \(n \log n\), \(n\), \(\sqrt{n}\), etc...</p>
+      <p>When you have a function \(f(n)\), take the highest term in the dominance hierarchy that is in \(f(n)\): <strong>that is the tightest big O bound that you can put on \(f(n)\)</strong></p>
+      <p>For example, if \(f(n)=3n^3+2n^2+2n+4\), we say that \(f(n)\) is \(O(n^3)\).</p>
+      <p>\(f(n)\) would <strong>not</strong> be \(O(n^2)\) or \(O(n)\), since those are lower then the highest term in \(f(n)\)</p>
+      <p>However, \(f(n)\) <strong>would also</strong> be \(O(n^4)\) or \(O(2^n)\), since those are above \(O(n^3)\) in the dominance hierarchy.</p>
+      <p>Remember, Big O is an upper bound. \(O(n^3)\) is the <strong>tightest upper bound that is correct.</strong></p>
+      <p>Think of it like this: you ask me how long it will take before a cake finishes baking. I <em>could</em> tell you:</p>
+      <p><em>"I'm sure it will be done before next week."</em></p>
+      <p>While that would be true, that wouldn't be very useful. And if I said:</p>
+      <p><em>"It'll be done in the next nanosecond"</em></p>
+      <p>That just wouldn't be true.</p>
+      <p>The goal of using Big O notation, is to get the <strong>tightest possible upper bound</strong> while still being correct.</p>
+      <p>So while our above \(f(n)\) may be \(O(n^4)\) or \(O(4^n)\), it is much more useful to use the tightest bound possible: \(O(n^3)\)</p>
+      <hr>
+      <h2>Big Omega</h2>
+      <p>So, we were able to use Big O notation to put an upper bound on an algorithm in terms of a simpler function.</p>
+      <p>Therefore, when we san an algorithm is \(O(g(n))\), it can be no slower than a constant multiple of \(g(n)\).</p>
+      <p>We can use the same procedure to put a <strong>lower bound</strong> on an algorithm. This is useful in proving that an algorithm can be no faster than a certain lower bound.</p>
+      <p>When a function \(f(n)\) can be lower bounded by \(g(n)\), we say that \(f(n)\) is \(\Omega (g(n))\)</p>
+      <h3>Definition of Big Omega:</h3>
+         <div class = "def">
+            <p>\(f(n)\) is said to be \(\Omega(g(n))\) if and only if</p>
+            <p>there exists <strong>positive constants</strong> \(n_0\) and \(c\) such that</p>
+            <p>\(f(n) \geq cg(n)\) for all \(n \geq n_0\)</p>
+      </div>
+      
+      <p>It is a known fact that the lower bound for comparison sorts is \(\Omega(n \log n)\).</p>
+      <p>This means that no comparison based sorting algorithm can have a runtime <em>faster</em> then a factor of \(c*(n\log n)\). (If someone says that their comparison sort runs in \(f(n)=200n+4\), they're lying!)</p>
+      <h3>Example:</h3>
+      <p class="center-text">\(n^3+2n^2+4\) is  \(\Omega(n)\), because \(n^3+2n^2+4 \geq 4n^3\) for all \(n \geq 4\)</p>
+
+      <div class="def">
+        <p>\(f(n) = n^3+2n^2+4\)</p>
+        <p>\(g(n) = n\)</p>
+
+        <p>First we remove the \(4\) term.</p>
+        <p>\(n^3+2n^2+4 \geq n^3+2n^2\) &nbsp;&nbsp;since \(4 \geq 0\) for \(n\) </p>
+        <p>Then we remove the \(2n^2\) term.</p>
+        <p>\(n^3+2n^2 \geq n^3 + 2n\) &nbsp;&nbsp; since \(n^2 \geq n\) for \(n \geq 1\)</p>
+
+        <p>Then we remove the \(n^3\) term.</p>
+        <p>\(n^3+2n \geq n + 2n\) &nbsp;&nbsp; since \(n^3 \geq n\) for \(n \geq 1\)</p>
+        <p>\(n + 2n = 3n\) &nbsp;&nbsp;
+        <p>Therefore, using the above two expressions, we can safely say:</p>
+        <p>\(n^3+2n^2+4 \geq 3n\) for \(n \geq 1\)</p>
+        <p>Again, doesn't this look familiar? This is the definition of Big Omega where  \(c=3\) and \(n_0=1\)</p>
+
+        <p>Therefore, using all the above information:</p>
+        
+        <p class="center-text">\(n^3+2n^2+4\) is \(\Omega(n)\), since \(n^3+2n^2+4 \leq 3n\) for \(n \geq 1\) </p>
+       </div>
+
+       <div id="sliders">
+        <div style="float:left">
+         <p id="slider-c4">\(c=3\)</p>
+         <input type="range" id="example4-c" name="quantity" min="1" max="10" value="4" step=0.5>
+       </div>
+       <div style="float:left">
+         <p id = "slider-n4">\(n_0=1\)
+         </p>
+         
+       <input type="range" id="example4-n" name="quantity" min="1" max="5" value="4" step="0.5">
+         </div>
+     </div>
+      
+       <div class = "colored-example" id="colored-example4">
+        <p class="center-text" id="example4-text">\(n^3+2n^2+4\) is \(\Omega(n)\), because \(n^3+2n^2+4\leq 3n\) for all \(n \geq 1\)</p>
+        <p id="example4-correct" class="center-text">Valid \(c\) and \(n_0\)</p>
+     </div>
+     <div id="example4-plot"></div>
+     <script>
+      green_color = "#2ecc71"
+      red_color = "#ff7675"
+      function updateExample4(){
+        var c = parseFloat($("#example4-c").val())
+        var n = parseFloat($("#example4-n").val())
+      
+        var txt = '\\(n^3+2n^2+4\\) is  \\(\\Omega(n)\\), because \\(n^3+2n^2+4 \\geq '+c+'n\\) for all \\(n \\geq '+n+'\\)'
+        
+        $("#example4-text").text(txt);
+        $("#slider-c4").text('\\(c='+c+"\\)");
+        $("#slider-n4").text('\\(n='+n+"\\)");
+        MathJax.typeset(["#example4-text","#slider-c4","#slider-n4"])
+
+        
+      
+        
+        paint_color=red_color
+        result_text = "Invalid \\(c\\) and \\(n_0\\)"
+        if(n*n*n+2*n*n+4 >= c*n){
+          paint_color = green_color
+          result_text = "Valid \\(c\\) and \\(n_0\\)"
+        }
+      
+        $("#colored-example4").css("background-color",paint_color)
+        $("#example4-correct").text(result_text);
+        MathJax.typeset(["#example4-correct"])
+      
+        drawExample1("example4-plot",c,n,paint_color,"x^3+2x^2+4","x",4,100,1);
+      }
+      
+      $("#example4-c").on("input",function() {
+        updateExample4()
+      });
+      
+      $("#example4-n").on("input",function() {
+        updateExample4()
+      });
+      
+      $("#colored-example4").css("background-color",green_color)
+      
+      drawExample1("example4-plot",3,1,"green","x^3+2x^2+4","x",4,100,1);
+   </script>
+
+<h3>Big Omega at a Glance</h3>
+<p>Remember our trick for Big O using the dominance hierarchy? It's a pretty similar process for Big Omega.</p>
+<h4>The Dominance Hierarchy:</h4>
+<div class = "def">
+    <p class="center-text">
+      \(1 \ll \log n \ll \sqrt{n} \ll n \ll n \log n \ll n^2 \ll n^3 \ll n^c \ll c^n \ll n!\)
+    </p>
+  </div>
+
+<p>When you have a function \(f(n)\), still take the <strong>highest</strong> term in the dominance hierarchy that is in \(f(n)\): <strong>that is the tightest Big Omega bound that you can put on \(f(n)\)</strong></p>
+<p>For example, if \(f(n)=3n^3+2n^2+2n\), we say that \(f(n)\) is \(\Omega(n^3)\).</p>
+<p>However, this time the extra bounds are in reverse compared to Big O.</p>
+<p>\(f(n)\) would <strong>not</strong> be \(\Omega(n^4)\) or \(\Omega(2^n)\), since those are higher then the highest term in \(f(n)\)</p>
+<p>However, \(f(n)\) <strong>would also</strong> be \(\Omega(n^2)\) or \(\Omega(1)\), since those are lower than \(\Omega(n^3)\) in the dominance hierarchy.</p>
+<p>Remember, Big Omega is an lower bound. \(\Omega(n^3)\) is the <strong>tightest lower bound that is correct.</strong></p>
+<p>Back to our cake analogy, I <em>could</em> say:</p>
+<p><em>"I'm sure this cake will take at least one second to bake."</em></p>
+<p>Again, technically true: but not very useful.</p>
+<p>The goal of using Big Omega notation, is to get the <strong>tightest possible lower bound</strong> while still being correct.</p>
+<p>So while our above \(f(n)\) may be \(\Omega(\sqrt{n})\) or \(\Omega(1)\), it is much more useful to use the tightest bound possible: \(\Omega(n^3)\)</p>
+<hr>
+<h2>Big Theta</h2>
+<p>This is the last topic we're going to cover in formal asymptotic analysis.</p>
+<p>We've shown that when we want an upper bound of a function, <strong>we use Big O.</strong></p>
+<p>We've also shown that when we want a lower bound of a function, <strong>we use Big Omega.</strong></p>
+<p>Also, we've discussed how when we use Big O and Big Omega, we want to choose the <strong>tightest bound possible.</strong></p>
+<p>What if we discover that \(f(n)\) is \(O(g(n))\) <strong>and</strong> \(\Omega(g(n))\)?</p>
+<p>We call this <strong>Big Theta</strong></p>
+<h3>Definition of Big Theta:</h3>
+<div class = "def">
+    <p>\(f(n)\) is said to be \(\Theta(g(n))\) if and only if:</p>
+    <p>\(f(n)\) is \(O(g(x))\) and \(\Omega(g(x))\)</p>
+    <p>Which is equivalent to saying:</p>
+    <p>there exists <strong>positive constants</strong> \(n_0\), \(c_0\) and \(c_1\) such that</p>
+    <p>\(f(n) \leq c_0 g(n)\) for all \(n \geq n_0\)</p>
+    <p>\(f(n) \geq c_1 g(n)\) for all \(n \geq n_0\)</p>
+</div>
+<p>If you understand Big O and Big Omega, Big Theta shouldn't be too far of a conceptual leap.</p>
+<p>To prove that \(f(n)\) is \(\Theta(g(n))\), you just have to prove that it is \(O(g(n))\) and \(\Omega(g(n))\), which you already know how to do!</p>
+<p>In fact, I think you're ready to try it out right now.</p>
+<p>Remember, all you need to do is find that \(f(n)\) is \(O(g(n))\) with a constant \(c_0\), and find that
+
+  \(f(n)\) is \(\Omega(g(n))\) with a a constant \(c_1\). Then, those are the constants you need to prove Big Theta!</p>
+</p>
+<h3>Your Turn</h3>
+         <p class="center-text">Prove that \(2n+4\) is  \(\Theta(n)\) by finding a suitable \(n_0\), \(c_0\), and \(c_1\)</p>
+         <div class="colored-example" id="colored-example6">
+            <p class="center-text" id="example61-text">\(2n+4\) is  \(O(n)\), because \(2n+4 \leq c_0 n\) for all \(n \geq n_0\)</p>
+            <p class="center-text" id="example62-text">\(2n+4\) is  \(\Omega(n)\), because \(2n+4 \geq c_1 n\) for all \(n \geq n_0\)</p>
+            <p class="center-text">Therefore, \(2n+4\) is \(\Theta(n)\) </p>
+            <p class="center-text" id="example6-correct">Choose a \(c_0\), \(c_1\) and \(n_0\)</p>
+         </div>
+         <p>Enter your result below:</p>
+         <p>(Remember, even if you get it wrong you can keep trying!)</p>
+         <input type="text" id="example61-c" placeholder="Type in c_0 here!">
+         <input type="text" id="example62-c" placeholder="Type in c_1 here!">
+         <input type="text" id="example6-n" placeholder="Type in n_0 here!">
+         <button type="button" id="example6-butt">Check if I'm Right!</button>
+         
+         <div id="example6-plot" style="visibility: hidden;"></div>
+         
+         <script>
+         function updateExample6(){
+          console.log("example6")
+          var c = parseFloat($("#example61-c").val())
+          var c_1 = parseFloat($("#example62-c").val())
+          var n = parseFloat($("#example6-n").val())
+        
+          var txt_1 = '\\(2n+4\\) is  \\(O(n)\\), because \\(2n+4 \\leq '+c+'n\\) for all \\(n \\geq '+n+'\\)'
+          var txt_2 = '\\(2n+4\\) is  \\(\\Omega(n)\\), because \\(2n+4 \\geq '+c_1+'n\\) for all \\(n \\geq '+n+'\\)'
+
+          
+          $("#example61-text").text(txt_1);
+          $("#example62-text").text(txt_2);
+          MathJax.typeset(["#example61-text","#example62-text"])
+
+          
+        
+          
+          paint_color=red_color
+          result_text = "Invalid \\(c_0\\),\\(c_1\\) and \\(n_0\\)"
+          
+
+          if(c >= 2 && c_1 <=2){
+            if(c*n >= 2*n+4){
+              if(c_1*n <= 2*n+4){
+                paint_color = green_color
+                result_text = "Valid \\(c_0\\),\\(c_1\\) and \\(n_0\\)"
+              }
+            }
+              
+          }
+        
+          $("#colored-example6").css("background-color",paint_color)
+          $("#example6-correct").text(result_text);
+          MathJax.typeset(["#example6-correct"])
+        
+          drawExample1("example6-plot",c,n,paint_color,"2x+4","x",10,20,0,c_1,false);
+        }
+        
+        
+        
+        $("#example6-butt").click(function() {
+          //alert("YO")
+          $("#example6-plot").css("visibility",'visible')
+          updateExample6()
+        });
+
+      drawExample1("example6-plot",1,1,"green","2x+4","x",10,20,0,1,false);
+
+      $("#colored-example6").css("background-color",'#dba7e6')
+     </script>
+    <hr>
+    <h2>Conclusion</h2>
+    <p>Congratulations! You (hopefully) understand Big O, Big Omega, and Big Theta notation.</p>
+    <p>Remember, the reason that we use these notations is to put a general bound on the algorithms we right, so we can easily talk about them in a general case.</p>
+    <p>Instead of having to recall the exact runtime of an algorithm, we can instead talk about it's Big O or Big Omega bounds.</p>
+    <p>However, <strong>you should always be careful when using asymptotic analysis</strong>, because sometimes you may <em>need</em> to go into the specifics!</em></p>
+    <p>For example, while one algorithm may be \(O(2^n)\), and the other is \(O(n^5)\), you may at a glance think that the second one is "better".</p>
+    <p>But think about this: What if the actual formulas were \(2^n+5\) and \(30000n^5+2000n^2\)</p>
+    <p>If you know you're dealing with a small amount of data, the exponential algorithm may be the better choice!</p>
+    <p>So remember, while Big O is a good tool for getting a general feel for the complexity of algorithms, it's not a silver bullet!</p>
+    <p>And with that, happy algorithm-ing!</p>
+    <p>- <em>James Skripchuk</em></p>
+    <hr>
+</div>
+
+<script>
+  // https://stackoverflow.com/questions/5999118/how-can-i-add-or-update-a-query-string-parameter
+  function UpdateQueryString(key, value, url) {
+    if (!url) url = window.location.href;
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
+        hash;
+
+    if (re.test(url)) {
+        if (typeof value !== 'undefined' && value !== null) {
+            return url.replace(re, '$1' + key + "=" + value + '$2$3');
+        } 
+        else {
+            hash = url.split('#');
+            url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+            if (typeof hash[1] !== 'undefined' && hash[1] !== null) {
+                url += '#' + hash[1];
+            }
+            return url;
+        }
+    }
+    else {
+        if (typeof value !== 'undefined' && value !== null) {
+            var separator = url.indexOf('?') !== -1 ? '&' : '?';
+            hash = url.split('#');
+            url = hash[0] + separator + key + '=' + value;
+            if (typeof hash[1] !== 'undefined' && hash[1] !== null) {
+                url += '#' + hash[1];
+            }
+            return url;
+        }
+        else {
+            return url;
+        }
+    }
+  }
+
+  function getScrollPercent() {
+    var h = document.documentElement, 
+        b = document.body,
+        st = 'scrollTop',
+        sh = 'scrollHeight';
+    return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+  }
+
+  function reportBehavior() {
+    $.post(UpdateQueryString('y', getScrollPercent()));
+  }
+
+  $("input").on("input",function() {
+      var log_str = UpdateQueryString(this.id, $(this).val());
+      $.post(log_str);
+  });
+
+  $("button").on("click",function() {
+    var log_str = UpdateQueryString(this.id, true);
+    $.post(log_str);
+  });
+
+
+
+  var INTERVAL_DELAY = 1000 * 10;
+
+  $(document).ready(function() {
+    reportBehavior();
+    setInterval(reportBehavior, INTERVAL_DELAY);
+  });
+  
+
+</script>
+      
+
+   </body>
+</html>
