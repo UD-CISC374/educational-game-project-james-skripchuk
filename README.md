@@ -1,9 +1,9 @@
-# educational-phaser-game-template
+# Asymptotic Explorer
 Developed by James Skripchuk
 
 
 # Blurb
-Asymptotic Explorer is an online interactive explanation that aims to give a cursory introduction to Big O notation and asymptotic analysis. These mathematical tools are used extensively in the analysis of algorithms. Nothing like this currently exists online, and there is an established learning need for CS students learning about algorithms to learn Big O notation.
+Asymptotic Explorer is an online interactive explanation that aims to give a cursory introduction to Big O notation and asymptotic analysis. These mathematical tools are used extensively in the analysis of algorithms in order to give a ballpark estimate on the the complexity of an algorithm, and to compare algorithms against each other. Nothing like this interactive explanaition currently exists online, and there is an established learning need for CS students learning about algorithms to learn Big O notation. This was mainly created for Dr. Bart's Introduction to Algorithms class, CISC320.
 
 # Instructions
 The game details instructions for how to interact with the modules throughout the gameplay process. The main interactive elements are to play with the sliders to see how the Big O condition holds for various values of the constants; and then to test proving a Big O expression by yourself.
